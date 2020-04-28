@@ -1,19 +1,19 @@
 # Python Cheat Sheet
 
-# Packages
+## Packages
 
-## Installing a package
+### Installing a package
 ```
 $ pip3 install numpy
 ```
 
-## Importing a package
+### Importing a package
 ```
 import numpy
 import numpy as np
 ```
 
-## Importing a function from a package
+### Importing a function from a package
 
 Not recommended because it's less clear where the function comes from. Better to import the entire package.
 
@@ -22,9 +22,9 @@ from numpy import array
 from numpy import array as my_array 
 ```
 
-# Arrays
+## Arrays
 
-## Subsetting using numpy
+### Subsetting using numpy
 ```
 >>> import numpy as np
 >>> x = [5, 10, 15]
