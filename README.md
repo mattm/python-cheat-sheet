@@ -24,13 +24,17 @@ from numpy import array as my_array
 
 ## Arrays
 
-### Subsetting using numpy
+### Creating an array from a list
+
 ```
->>> import numpy as np
->>> x = [5, 10, 15]
+>>> np.array([5, 10, 15])
+array([ 5, 10, 15])
+```
+
+### Subsetting an array
+
+```
 >>> x = np.array([5, 10, 15])
->>> x > 8
-array([False,  True,  True])
 >>> x[x > 8]
 array([10, 15])
 ```
