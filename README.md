@@ -39,6 +39,13 @@ array([ 5, 10, 15])
 array([10, 15])
 ```
 
+With multiple conditions:
+
+```
+x[np.logical_and(x > 8, x < 12)]
+array([10])
+```
+
 ## Charts
 
 ## Simple charts
@@ -63,7 +70,7 @@ plt.show()
 
 ## Data Frames
 
-## Building manually
+### Building manually
 
 With a default interger indeces:
 
@@ -98,14 +105,14 @@ df.index = ['2020-04-01', '2020-05-01']
 2020-05-01     5678     84
 ```
 
-## Importing from a CSV
+### Importing from a CSV
 
 ```
 import pandas as pd
 df = pd.read_csv("data.csv")
 ```
 
-## Selecting a column as a data frame
+### Selecting a column as a data frame
 
 ```
 df[['revenue']]
@@ -123,9 +130,19 @@ df[['revenue', 'users']]
             revenue  users
 2020-04-01     1234     68
 2020-05-01     5678     8
+
+# or
+
+df.loc[:, ['revenue', 'users']]
+
+            revenue  users
+2020-04-01     1234     68
+2020-05-01     5678     84
 ```
 
-## Selecting rows by index
+### Selecting rows
+
+All columns for a row by its label:
 
 ```
 df.loc[['2020-04-01']]
@@ -134,11 +151,19 @@ df.loc[['2020-04-01']]
 2020-04-01     1234     68
 ```
 
-Or specific columns:
+Or specific columns for a row by its label:
 
 ```
 df.loc[['2020-04-01'], ['users']]
 
             users
 2020-04-01     68
+```
+
+Or all columns for a row by its index:
+
+```
+df.iloc[[1]]
+            revenue  users
+2020-05-01     5678     84
 ```
