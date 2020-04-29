@@ -22,6 +22,20 @@ from numpy import array
 from numpy import array as my_array 
 ```
 
+## Conditions
+
+```
+if condition :
+  ...
+  ...
+elif condition :
+  ...
+  ...
+else :
+  ...
+  ...
+ ```
+
 ## Arrays
 
 ### Creating an array from a list
@@ -164,6 +178,25 @@ Or all columns for a row by its index:
 
 ```
 df.iloc[[1]]
+
             revenue  users
 2020-05-01     5678     84
+```
+
+Or by a condition:
+
+```
+df[df['revenue'] > 3000]
+
+            revenue  users
+2020-05-01     5678     84
+```
+
+Or by multiple conditions:
+
+```
+df[np.logical_and(df['revenue'] > 1000, df['revenue'] < 2000)]
+
+            revenue  users
+2020-04-01     1234     68
 ```
