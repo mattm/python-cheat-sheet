@@ -35,6 +35,61 @@ else :
   ...
   ...
  ```
+ 
+## While loops
+ 
+```
+error = 50.0
+while error > 1 :
+  error = error / 2
+  print(error)
+```
+ 
+## For loops
+ 
+```
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+for area in areas :
+  print(area)
+```
+ 
+Or with an index:
+ 
+```
+areas = [11.25, 18.0, 20.0, 10.75, 9.50]
+for index, area in enumerate(areas) :
+  print("At index " + str(index) + ": " + str(area))
+```
+
+Iterate over a dict:
+
+```
+dictionary = {
+	"2020-04-01": 6,
+	"2020-05-01": 8
+}
+
+for key, value in dictionary.items() :
+	print(key + ": " + str(value))
+```
+
+Iterating over an array:
+
+```
+arr = np.array([5, 7, 9])
+for item in arr :
+	print(item)
+```
+
+Iterating over an array of arrays:
+
+```
+arr1 = np.array([5, 7, 9])
+arr2 = np.array([11, 13, 15])
+arr = np.array([arr1, arr2])
+for item in np.nditer(arr) :
+	print(item)
+```
 
 ## Arrays
 
@@ -199,4 +254,24 @@ df[np.logical_and(df['revenue'] > 1000, df['revenue'] < 2000)]
 
             revenue  users
 2020-04-01     1234     68
+```
+
+## Adding a column
+
+By applying a function to an existing column value:
+
+```
+import pandas as pd
+
+data = {
+  'revenue': [1234, 5678],
+  'users': [68, 84] 
+}
+df = pd.DataFrame(data)
+
+df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
+
+   revenue  users  next_month_projection
+0     1234     68                 1295.7
+1     5678     84                 5961.9
 ```
