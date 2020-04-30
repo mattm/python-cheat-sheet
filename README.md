@@ -91,6 +91,29 @@ for item in np.nditer(arr) :
 	print(item)
 ```
 
+Iterating from 0 to 10:
+
+```
+for x in range(11) : 
+	print(x)
+```
+
+Iterating 5 to 10:
+
+```
+for x in range(5, 11) : 
+	print(x)
+```
+
+## Lists
+
+### Appending to a list
+
+```
+x = []
+x.append("hi")
+```
+
 ## Arrays
 
 ### Creating an array from a list
@@ -274,4 +297,24 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
    revenue  users  next_month_projection
 0     1234     68                 1295.7
 1     5678     84                 5961.9
+```
+
+## Random numbers
+
+Setting a seed for reproducability:
+
+```
+np.random.seed(123)
+```
+
+Between 0 and 1:
+
+```
+np.random.rand()
+```
+
+Between 0 and 10:
+
+```
+print(np.random.randint(0, 11))
 ```
