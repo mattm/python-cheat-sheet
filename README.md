@@ -138,6 +138,16 @@ x[np.logical_and(x > 8, x < 12)]
 array([10])
 ```
 
+## Functions
+
+```
+def square(num):
+    """Squres a number"""
+    return num ** 2
+
+print(square(5))
+```
+
 ## Charts
 
 ## Simple charts
