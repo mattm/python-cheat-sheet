@@ -148,6 +148,12 @@ def square(num):
 print(square(5))
 ```
 
+As a lambda:
+
+```
+square = lambda x: x ** 2
+```
+
 ## Charts
 
 ## Simple charts
