@@ -114,6 +114,46 @@ x = []
 x.append("hi")
 ```
 
+### List comprenension
+
+```
+nums = [1, 2, 3, 4]
+updated = [num + 1 for num in nums]
+print(updated)
+
+[2, 3, 4, 5]
+```
+
+With a conditional on the predicate expression:
+
+```
+names = ['matt', 'simon', 'morgan']
+m_names = [name for name in names if name[0] == 'm']
+print(m_names)
+
+['matt', 'morgan']
+```
+
+With a conditional on the output expression:
+
+```
+names = ['matt', 'simon', 'morgan']
+m_names = [name if name[0] == 'm' else '' for name in names]
+print(m_names)
+
+['matt', '', 'morgan']
+```
+
+Creating a dict:
+
+```
+names = ['matt', 'simon', 'morgan']
+lengths = { name: len(name) for name in names }
+print(lengths)
+
+{'matt': 4, 'simon': 5, 'morgan': 6}
+```
+
 ## Arrays
 
 ### Creating an array from a list
