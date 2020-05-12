@@ -32,3 +32,9 @@ sns.set()
 
 plt.show()
 ```
+
+## ggplot Styling
+
+```
+plt.style.use('ggplot')
+```
