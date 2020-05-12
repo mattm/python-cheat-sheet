@@ -148,3 +148,9 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 0     1234     68                 1295.7
 1     5678     84                 5961.9
 ```
+
+## Renaming columns
+
+```
+df.rename(columns = {"old_name": "new name"})
+```
