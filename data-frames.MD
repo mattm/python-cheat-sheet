@@ -43,6 +43,39 @@ Returns a tuple with the rows and columns.
 rows, columns = df.shape
 ```
 
+## Determining column types
+
+```
+df.info()
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 2 entries, 0 to 1
+Data columns (total 3 columns):
+ #   Column   Non-Null Count  Dtype 
+---  ------   --------------  ----- 
+ 0   month    2 non-null      object
+ 1   revenue  2 non-null      int64 
+ 2   users    2 non-null      int64 
+dtypes: int64(2), object(1)
+memory usage: 176.0+ bytes
+```
+
+## Viewing statistics about numeric columns
+
+```
+df.describe()
+
+           revenue      users
+count     2.000000   2.000000
+mean   3456.000000  76.000000
+std    3142.382536  11.313708
+min    1234.000000  68.000000
+25%    2345.000000  72.000000
+50%    3456.000000  76.000000
+75%    4567.000000  80.000000
+max    5678.000000  84.000000
+```
+
 ## Importing from a CSV
 
 ```
