@@ -193,23 +193,3 @@ As a lambda:
 ```
 square = lambda x: x ** 2
 ```
-
-## Random numbers
-
-Setting a seed for reproducability:
-
-```
-np.random.seed(123)
-```
-
-Between 0 and 1:
-
-```
-np.random.rand()
-```
-
-Between 0 and 10:
-
-```
-print(np.random.randint(0, 11))
-```
