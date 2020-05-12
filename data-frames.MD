@@ -35,6 +35,14 @@ df.index = ['2020-04-01', '2020-05-01']
 2020-05-01     5678     84
 ```
 
+## Determining a data frame's dimensions
+
+Returns a tuple with the rows and columns.
+
+```
+rows, columns = df.shape
+```
+
 ## Importing from a CSV
 
 ```
