@@ -20,7 +20,20 @@ plt.xticks(values, labels)
 plt.show()
 ```
 
-## Seaborne styling
+## Count Plot
+
+For visualizing the occurrences of a categorical variable:
+
+```
+sns.countplot(x = 'education', hue = 'party', data = df)
+```
+
+* `x` is the column name of the categorical variable
+* `hue` here is the column we want to segment by
+
+## Styling
+
+### seaborn
 
 ```
 import seaborn as sns
@@ -33,7 +46,7 @@ sns.set()
 plt.show()
 ```
 
-## ggplot Styling
+### ggplot
 
 ```
 plt.style.use('ggplot')
