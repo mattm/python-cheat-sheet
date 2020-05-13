@@ -5,7 +5,7 @@
 * The features need to be in an array where each column is a feature and each row a different observation or data point
 * The target needs to be a single column with the same number of observations as the feature data
 
-```
+```python
 from sklearn import datasets
 import pandas as pd
 
@@ -14,12 +14,12 @@ iris = datasets.load_iris()
 
 Here `iris` is of type `sklearn.utils.Bunch` and has these keys:
 
-```
+```python
 iris.keys()
 dict_keys(['data', 'target', 'frame', 'target_names', 'DESCR', 'feature_names', 'filename'])
 ```
 
-```
+```python
 X = iris.data
 
 array([[5.1, 3.5, 1.4, 0.2],
@@ -31,7 +31,7 @@ array([[5.1, 3.5, 1.4, 0.2],
        ...
 ```
 
-```
+```python
 y = iris.target
 
 array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -45,7 +45,7 @@ array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
 "Notice we named the feature array X and response variable y: This is in accordance with the common scikit-learn practice."
 
-```
+```python
 iris.feature_names
 
 ['sepal length (cm)',
@@ -56,7 +56,7 @@ iris.feature_names
  
 We can build a data frame using the features and feature names:
 
-```
+```python
 df = pd.DataFrame(X, columns = iris.feature_names)
 
      sepal length (cm)  sepal width (cm)  petal length (cm)  petal width (cm)
@@ -75,7 +75,7 @@ df = pd.DataFrame(X, columns = iris.feature_names)
 
 # k-NN Classifier
 
-```
+```python
 # Import necessary modules
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
