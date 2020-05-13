@@ -2,7 +2,7 @@
 
 ## Pyplot
 
-```
+```python
 import matplotlib.pyplot as plt
 
 # Chart type:
@@ -20,11 +20,17 @@ plt.xticks(values, labels)
 plt.show()
 ```
 
+## Resetting an existing plot
+
+```python
+plt.close()
+```
+
 ## Count Plot
 
 For visualizing the occurrences of a categorical variable:
 
-```
+```python
 sns.countplot(x = 'education', hue = 'party', data = df)
 ```
 
@@ -35,7 +41,7 @@ sns.countplot(x = 'education', hue = 'party', data = df)
 
 ### seaborn
 
-```
+```python
 import seaborn as sns
 
 sns.set()
@@ -48,6 +54,6 @@ plt.show()
 
 ### ggplot
 
-```
+```python
 plt.style.use('ggplot')
 ```
