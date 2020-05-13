@@ -120,6 +120,10 @@ df['users'].tolist()
 ## Get array from column of Pandas dataframe
 
 ```
+df['users'].values
+
+# or
+
 df['users'].to_numpy()
 ```
 
