@@ -4,7 +4,7 @@
 
 With a default interger indeces:
 
-```
+```python
 import pandas as pd
 
 data = { 
@@ -21,7 +21,7 @@ df = pd.DataFrame(data)
 
 With named indeces:
 
-```
+```python
 import pandas as pd
 data = {
   'revenue': [1234, 5678],
@@ -39,13 +39,13 @@ df.index = ['2020-04-01', '2020-05-01']
 
 Returns a tuple with the rows and columns.
 
-```
+```python
 rows, columns = df.shape
 ```
 
 ## Determining column types
 
-```
+```python
 df.info()
 
 <class 'pandas.core.frame.DataFrame'>
@@ -62,7 +62,7 @@ memory usage: 176.0+ bytes
 
 ## Viewing statistics about numeric columns
 
-```
+```python
 df.describe()
 
            revenue      users
@@ -78,14 +78,14 @@ max    5678.000000  84.000000
 
 ## Importing from a CSV
 
-```
+```python
 import pandas as pd
 df = pd.read_csv("data.csv")
 ```
 
 ## Selecting a column as a data frame
 
-```
+```python
 df[['revenue']]
 
             revenue
@@ -95,7 +95,7 @@ df[['revenue']]
 
 Or multiple:
 
-```
+```python
 df[['revenue', 'users']]
 
             revenue  users
@@ -113,13 +113,13 @@ df.loc[:, ['revenue', 'users']]
 
 ## Get list from column of Pandas dataframe
 
-```
+```python
 df['users'].tolist()
 ```
 
 ## Get array from column of Pandas dataframe
 
-```
+```python
 df['users'].values
 
 # or
@@ -131,7 +131,7 @@ df['users'].to_numpy()
 
 All columns for a row by its label:
 
-```
+```python
 df.loc[['2020-04-01']]
 
             revenue  users
@@ -140,7 +140,7 @@ df.loc[['2020-04-01']]
 
 Or specific columns for a row by its label:
 
-```
+```python
 df.loc[['2020-04-01'], ['users']]
 
             users
@@ -149,7 +149,7 @@ df.loc[['2020-04-01'], ['users']]
 
 Or all columns for a row by its index:
 
-```
+```python
 df.iloc[[1]]
 
             revenue  users
@@ -158,7 +158,7 @@ df.iloc[[1]]
 
 Or by a condition:
 
-```
+```python
 df[df['revenue'] > 3000]
 
             revenue  users
@@ -167,7 +167,7 @@ df[df['revenue'] > 3000]
 
 Or by multiple conditions:
 
-```
+```python
 df[np.logical_and(df['revenue'] > 1000, df['revenue'] < 2000)]
 
             revenue  users
@@ -178,7 +178,7 @@ df[np.logical_and(df['revenue'] > 1000, df['revenue'] < 2000)]
 
 By applying a function to an existing column value:
 
-```
+```python
 import pandas as pd
 
 data = {
@@ -196,7 +196,7 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 
 ## Removing a column
 
-```
+```python
 import pandas as pd
 
 data = {
@@ -215,6 +215,6 @@ df = df.drop('revenue', axis = 1)
 
 ## Renaming columns
 
-```
+```python
 df.rename(columns = {"old_name": "new name"})
 ```
