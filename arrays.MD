@@ -79,3 +79,13 @@ array([[1],
        [4],
        [5]])
 ```
+
+## Creating an array of evenly spaced numbers between two values
+
+```python
+np.linspace(1, 2, num=2)
+array([1. , 1.5 ])
+
+np.linspace(1, 2, num=3)
+array([1. , 1.5, 2. ])
+```
