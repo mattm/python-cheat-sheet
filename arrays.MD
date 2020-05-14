@@ -63,3 +63,19 @@ x.reshape((-1, 1))
 #        [7],
 #        [8]])
 ```
+
+This last one comes up a lot: `reshape((-1, 1))`: it takes an array of `n` items:
+
+```python
+[1, 2, 3, 4, 5]
+```
+
+And converts it into a 2d array with 1 column and `n` rows:
+
+```python
+array([[1],
+       [2],
+       [3],
+       [4],
+       [5]])
+```
