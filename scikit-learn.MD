@@ -109,7 +109,7 @@ import matplotlib.pyplot as plt
 
 # Simulate some observations that are approximately linear
 x_actual = np.arange(30)
-y_actual = 5 * x + np.random.randint(0, 20, df.shape[0])
+y_actual = 5 * x_actual + np.random.randint(0, 20, len(x_actual))
 
 # Use skikit-learn to fit a linear regression model to the data
 reg = LinearRegression()
