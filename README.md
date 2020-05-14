@@ -139,30 +139,6 @@ print(lengths)
 {'matt': 4, 'simon': 5, 'morgan': 6}
 ```
 
-## Arrays
-
-### Creating an array from a list
-
-```
->>> np.array([5, 10, 15])
-array([ 5, 10, 15])
-```
-
-### Subsetting an array
-
-```python
->>> x = np.array([5, 10, 15])
->>> x[x > 8]
-array([10, 15])
-```
-
-With multiple conditions:
-
-```python
-x[np.logical_and(x > 8, x < 12)]
-array([10])
-```
-
 ## Functions
 
 ```python
