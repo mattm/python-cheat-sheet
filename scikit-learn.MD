@@ -99,3 +99,33 @@ knn.fit(X_train, y_train)
 # Print the accuracy
 print(knn.score(X_test, y_test))
 ```
+
+# Linear Regression
+
+```
+import numpy as np
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+# Simulate some observations that are approximately linear
+x_actual = np.arange(30)
+y_actual = 5 * x + np.random.randint(0, 20, df.shape[0])
+
+# Use skikit-learn to fit a linear regression model to the data
+reg = LinearRegression()
+X = x_actual.reshape(-1, 1)
+y = y_actual.reshape(-1, 1)
+reg.fit(X, y)
+
+# Print out the r-squared value
+print("R-squared:", reg.score(X, y))
+
+# Create a visualization showing the data and the model predictions
+plt.scatter(X, y)
+
+prediction_space = np.linspace(min(X), max(X)).reshape(-1, 1)
+y_pred = reg.predict(prediction_space)
+plt.plot(prediction_space, y_pred, color='black', linewidth=2)
+
+plt.show()
+```
