@@ -73,7 +73,7 @@ df = pd.DataFrame(X, columns = iris.feature_names)
 149                5.9               3.0                5.1               1.8
 ```
 
-# k-NN Classifier
+## k-NN Classifier
 
 ```python
 # Import necessary modules
@@ -100,7 +100,7 @@ knn.fit(X_train, y_train)
 print(knn.score(X_test, y_test))
 ```
 
-# Linear Regression
+## Linear Regression
 
 ```python
 import numpy as np
@@ -127,5 +127,42 @@ prediction_space = np.linspace(min(X), max(X)).reshape(-1, 1)
 y_pred = reg.predict(prediction_space)
 plt.plot(prediction_space, y_pred, color='black', linewidth=2)
 
+plt.show()
+```
+
+## Lasson regregssion analysis
+
+To identify which features are the most important
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import Lasso
+
+df = pd.read_csv("data.csv")
+df = df.rename(columns = {
+    "Company ID": "com_id",
+    "Billings Total Users": "users",
+    "Billings Total Docs": "docs",
+    "Billings Total Addons": "addons",
+    "Billings Total Messages": "messages",
+    "Billings Total Billings": "billings"
+})
+
+features = df.drop(["com_id", "billings"], axis=1)
+feature_names = features.columns
+X = features.values
+y = df["billings"].values
+
+# Instantiate a lasso regressor
+lasso = Lasso(alpha=0.4, normalize=True)
+
+# Fit the regressor to the data
+lasso.fit(X, y)
+lasso_coef = lasso.coef_
+
+# Plot the coefficients
+plt.plot(range(len(feature_names)), lasso_coef)
+plt.xticks(range(len(feature_names)), feature_names.values, rotation=60)
 plt.show()
 ```
