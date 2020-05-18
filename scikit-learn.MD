@@ -210,5 +210,5 @@ print("Confusion Matrix:\n", c_matrix, "\n")
 print("Classification Report:\n", c_report, "\n")
 print("Precision:", precision)     # The % of companies classified as a conversion that actually converted
 print("Recall:", recall)           # The % of conversions that were correctly identified
-print("Accuracy:", accuracy)        # The overall % correct. Same as knn.score(X_test, y_test)
+print("Accuracy:", accuracy)       # The overall % correct. Same as knn.score(X_test, y_test)
 ```
