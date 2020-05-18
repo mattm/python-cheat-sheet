@@ -197,20 +197,11 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 ## Removing a column
 
 ```python
-import pandas as pd
+# One column:
+df = df.drop('revenue', axis=1)
 
-data = {
-  'revenue': [1234, 5678],
-  'users': [68, 84] 
-}
-df = pd.DataFrame(data)
-
-# could also do axis = 'columns'
-df = df.drop('revenue', axis = 1)
-
-   users
-0     68
-1     84
+# Multiple columns:
+df = df.drop(['revenue', 'users'] axis=1)
 ```
 
 ## Renaming columns
