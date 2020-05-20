@@ -22,6 +22,17 @@ x[np.logical_and(x > 8, x < 12)]
 array([10])
 ```
 
+## Mapping items
+
+```python
+x = np.array([4, 6, 8, 10])
+squarer = lambda i: i ** 2
+squared = squarer(x)
+
+# [ 16  36  64 100]
+```
+
+
 ## Reshaping
 
 ```python
