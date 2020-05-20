@@ -222,6 +222,8 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
+from sklearn.model_selection import cross_val_score
 
 # Prepare the data
 df = pd.read_csv("data.csv")
@@ -265,8 +267,16 @@ false_positive_rate = np.sum(df['is_false_positive']) / np.sum(df['y_test'] == F
 # Instead of doing this manually though, we can use roc_curve to plot all of the FPR/TPR points at various thresholds
 fpr, tpr, thresholds = roc_curve(y_test, y_pred_prob)
 
+# We can also compute the area under the curve (AUC) which will range from 
+# 0.5 (model is no better than random guesses) to 1 (100% TPR and 0% FPR).
+print('AUC:', roc_auc_score(y_test, y_pred_prob))
+
+# And instead of just checking the AUC for this training data, we can check it against different training sets:
+cv_auc = cross_val_score(logreg, X, y, cv=5, scoring='roc_auc')
+print('Cross Val AUC:', cv_auc)
+
 plt.plot([0, 1], [0, 1], 'k--')
-plt.plot(fpr, tpr, label="Logistic Regression")
+plt.plot(fpr, tpr, label='Logistic Regression')
 plt.scatter([false_positive_rate], [true_positive_rate], c='red')
 plt.xlabel('False Positive Rate')
 plt.ylabel('True Positive Rate')
