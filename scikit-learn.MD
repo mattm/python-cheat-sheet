@@ -283,3 +283,31 @@ plt.ylabel('True Positive Rate')
 plt.title('Logistic Regerssion ROC Curve')
 plt.show()
 ```
+
+## Hyperparameter Tuning
+
+```python
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
+
+# Prepare the data
+df = pd.read_csv("data.csv")
+df = df.drop(['company_id', 'sign_up_email_domain', 'trial_score', 'trial_score_description'], axis=1)
+df['sign_up_email_type'] = df['sign_up_email_type'].apply(lambda x: 1 if x == 'Work Email' else 0)
+
+c_space = np.logspace(-5, 8, 15)
+param_grid = {'C': c_space}
+
+logreg = LogisticRegression()
+logreg_cv = GridSearchCV(logreg, param_grid, cv=5)
+
+X = df.drop(['has_closed'], axis=1)
+y = df['has_closed'].values
+
+logreg_cv.fit(X, y)
+
+# Print the tuned parameters and score
+print("Tuned Logistic Regression Parameters: {}".format(logreg_cv.best_params_)) 
+print("Best score is {}".format(logreg_cv.best_score_))
+```
