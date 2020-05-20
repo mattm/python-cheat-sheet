@@ -212,3 +212,64 @@ print("Precision:", precision)     # The % of companies classified as a conversi
 print("Recall:", recall)           # The % of conversions that were correctly identified
 print("Accuracy:", accuracy)       # The overall % correct. Same as knn.score(X_test, y_test)
 ```
+
+## ROC Curves
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_curve
+
+# Prepare the data
+df = pd.read_csv("data.csv")
+df = df.drop(['company_id', 'sign_up_email_domain', 'trial_score', 'trial_score_description'], axis=1)
+df['sign_up_email_type'] = df['sign_up_email_type'].apply(lambda x: 1 if x == 'Work Email' else 0)
+
+# Train a logistic regression model
+X = df.drop(['has_closed'], axis=1)
+y = df['has_closed'].values
+X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, stratify=y)
+logreg = LogisticRegression()
+logreg.fit(X_train, y_train)
+
+# predict_proba returns a 2d array, where each array item is an array containing the probability for each class
+# In this case (binomial classification) it's: [probability_free, probability_converted]
+# We grab the probability estimates of the positive class (a conversion) for each observation in the test data:
+y_pred_prob = logreg.predict_proba(X_test)[:, 1]
+
+# We can see for each actual result (whether a company in the test data converted or not)
+# what the model assigned as the company's conversion probability
+for index, y_actual in enumerate(y_test[0:10]):
+    model_conversion_prob = y_pred_prob[index]
+    print(y_actual, model_conversion_prob.round(2))
+
+# Now what we want to do is understand the relationship between TPR and FPR
+
+# We can calculate TPR and FPR manually at a given threshold:
+positive_identifier = lambda i: i > 0.2
+df = pd.DataFrame({
+    'y_test': y_test,
+    'y_pred_prob': y_pred_prob,
+    'is_positive': positive_identifier(y_pred_prob)
+})
+df['is_true_positive'] = df.apply(lambda x: (x['y_test'] == True) & (x['is_positive'] == True), axis=1)
+df['is_false_positive'] = df.apply(lambda x: (x['y_test'] == False) & (x['is_positive'] == True), axis=1)
+true_positive_rate = np.sum(df['is_true_positive']) / np.sum(df['y_test'])
+false_positive_rate = np.sum(df['is_false_positive']) / np.sum(df['y_test'] == False)
+
+# At a threshold of 0.2, we get a FPR of 019. and a TPR of 0.72 which we'll later verify is on the ROC curve
+
+# Instead of doing this manually though, we can use roc_curve to plot all of the FPR/TPR points at various thresholds
+fpr, tpr, thresholds = roc_curve(y_test, y_pred_prob)
+
+plt.plot([0, 1], [0, 1], 'k--')
+plt.plot(fpr, tpr, label="Logistic Regression")
+plt.scatter([false_positive_rate], [true_positive_rate], c='red')
+plt.xlabel('False Positive Rate')
+plt.ylabel('True Positive Rate')
+plt.title('Logistic Regerssion ROC Curve')
+plt.show()
+```
