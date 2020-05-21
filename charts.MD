@@ -20,6 +20,18 @@ plt.xticks(values, labels)
 plt.show()
 ```
 
+## Box plot
+
+```python
+import pandas as pd
+df = pd.read_csv('gapminder.csv')
+
+# First argument is the y-axis, second argument is what to group by on the x-axis
+df.boxplot('life', 'Region', rot=60)
+
+plt.show()
+```
+
 ## Resetting an existing plot
 
 ```python
