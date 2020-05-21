@@ -43,6 +43,12 @@ Returns a tuple with the rows and columns.
 rows, columns = df.shape
 ```
 
+## Determining column names
+
+```python
+df.columns
+```
+
 ## Determining column types
 
 ```python
