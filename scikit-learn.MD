@@ -339,3 +339,32 @@ tree_cv.fit(X, y)
 print("Tuned Decision Tree Parameters: {}".format(tree_cv.best_params_))
 print("Best score is {}".format(tree_cv.best_score_))
 ```
+
+## Preprocessing categorical variables using get_dummies
+
+```python
+import pandas as pd
+from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import GridSearchCV
+
+# Prepare the data
+df = pd.read_csv("data.csv")
+df = df.drop(['company_id', 'sign_up_email_domain', 'trial_score', 'trial_score_description'], axis=1)
+
+print(df.head())
+# `get_dummies` will take the categorical labels (sign_up_email_type here) and create additional columns
+# for each possible value: 'sign_up_email_type_Personal Email' and 'sign_up_email_type_Work Email' where the values
+# are a 0 or 1. 
+df = pd.get_dummies(df)
+
+# However, because there are only two possible values for work email, it's redundant to both
+# of these new columns; the model only needs 1 and have the extra one could cause problems with some models.
+df = df.drop('sign_up_email_type_Work Email', axis=1)
+
+# And finally we'll clean up the column name that get_dummies created
+df = df.rename(columns={
+    'sign_up_email_type_Personal Email': 'has_personal_email'
+})
+
+df.head()
+```
