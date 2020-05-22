@@ -235,3 +235,19 @@ df.revenue.replace(0, np.nan, inplace=True)
 # 0   1234.0     68
 # 1      NaN     84
 ```
+
+## Removing all rows containing NA values
+
+```python
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({
+  'revenue': [1234, np.nan],
+  'users': [68, 84] 
+})
+df = df.dropna()
+
+#    revenue  users
+# 0   1234.0     68
+```
