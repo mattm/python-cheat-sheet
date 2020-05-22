@@ -236,6 +236,16 @@ df.revenue.replace(0, np.nan, inplace=True)
 # 1      NaN     84
 ```
 
+## Replacing values in all columns
+
+```python
+df = df.replace('?', np.nan)
+
+# or
+
+df[df == '?'] = np.nan
+```
+
 ## Removing all rows containing NA values
 
 ```python
