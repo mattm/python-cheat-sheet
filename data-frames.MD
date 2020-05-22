@@ -161,6 +161,7 @@ print(df.col1.sum())
 # 6
 ```
 
+
 ## Selecting rows
 
 All columns for a row by its label:
