@@ -407,3 +407,19 @@ y_pred = pipeline.predict(X_test)
 # Compute metrics
 print(classification_report(y_test, y_pred))
 ```
+
+## Scaling
+
+```python
+import numpy as np
+from sklearn.preprocessing import scale
+
+x = np.array([1, 2, 3])
+
+# Quick way of scaling
+x_scaled = scale(x)
+# [-1.22474487  0.          1.22474487]
+
+# We can see that scaling manually has the same result
+standard_deviations = (x - np.mean(x)) / np.std(x)
+```
