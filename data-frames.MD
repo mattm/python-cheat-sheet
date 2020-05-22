@@ -218,3 +218,20 @@ df = df.drop(['revenue', 'users'] axis=1)
 ```python
 df.rename(columns = {"old_name": "new name"})
 ```
+
+## Replacing values in a column
+
+```python
+import pandas as pd
+import numpy as np
+
+df = pd.DataFrame({
+  'revenue': [1234, 0],
+  'users': [68, 84] 
+})
+df.revenue.replace(0, np.nan, inplace=True)
+
+#    revenue  users
+# 0   1234.0     68
+# 1      NaN     84
+```
