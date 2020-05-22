@@ -121,16 +121,19 @@ df.loc[:, ['revenue', 'users']]
 
 ```python
 df['users'].tolist()
+df.users.tolist()
 ```
 
 ## Get array from column of Pandas dataframe
 
 ```python
 df['users'].values
+df.users.values
 
 # or
 
 df['users'].to_numpy()
+df.users.to_numpy()
 ```
 
 ## Selecting rows
