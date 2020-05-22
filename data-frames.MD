@@ -14,9 +14,9 @@ data = {
 }
 df = pd.DataFrame(data)
 
-        month  revenue  users
-0  2020-04-01     1234     68
-1  2020-05-01     5678     84
+#         month  revenue  users
+# 0  2020-04-01     1234     68
+# 1  2020-05-01     5678     84
 ```
 
 With named indeces:
@@ -30,9 +30,9 @@ data = {
 df = pd.DataFrame(data)
 df.index = ['2020-04-01', '2020-05-01']
 
-            revenue  users
-2020-04-01     1234     68
-2020-05-01     5678     84
+#             revenue  users
+# 2020-04-01     1234     68
+# 2020-05-01     5678     84
 ```
 
 ## Determining a data frame's dimensions
@@ -94,9 +94,9 @@ df = pd.read_csv("data.csv")
 ```python
 df[['revenue']]
 
-            revenue
-2020-04-01     1234
-2020-05-01     5678
+#             revenue
+# 2020-04-01     1234
+# 2020-05-01     5678
 ```
 
 Or multiple:
@@ -112,9 +112,9 @@ df[['revenue', 'users']]
 
 df.loc[:, ['revenue', 'users']]
 
-            revenue  users
-2020-04-01     1234     68
-2020-05-01     5678     84
+#             revenue  users
+# 2020-04-01     1234     68
+# 2020-05-01     5678     84
 ```
 
 ## Get list from column of Pandas dataframe
@@ -143,8 +143,8 @@ All columns for a row by its label:
 ```python
 df.loc[['2020-04-01']]
 
-            revenue  users
-2020-04-01     1234     68
+#             revenue  users
+# 2020-04-01     1234     68
 ```
 
 Or specific columns for a row by its label:
@@ -152,8 +152,8 @@ Or specific columns for a row by its label:
 ```python
 df.loc[['2020-04-01'], ['users']]
 
-            users
-2020-04-01     68
+#             users
+# 2020-04-01     68
 ```
 
 Or all columns for a row by its index:
@@ -170,8 +170,8 @@ Or by a condition:
 ```python
 df[df['revenue'] > 3000]
 
-            revenue  users
-2020-05-01     5678     84
+#             revenue  users
+# 2020-05-01     5678     84
 ```
 
 Or by multiple conditions:
@@ -179,8 +179,8 @@ Or by multiple conditions:
 ```python
 df[np.logical_and(df['revenue'] > 1000, df['revenue'] < 2000)]
 
-            revenue  users
-2020-04-01     1234     68
+#             revenue  users
+# 2020-04-01     1234     68
 ```
 
 ## Adding a column
@@ -198,9 +198,9 @@ df = pd.DataFrame(data)
 
 df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 
-   revenue  users  next_month_projection
-0     1234     68                 1295.7
-1     5678     84                 5961.9
+#    revenue  users  next_month_projection
+# 0     1234     68                 1295.7
+# 1     5678     84                 5961.9
 ```
 
 ## Removing a column
