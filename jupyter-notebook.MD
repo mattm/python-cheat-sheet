@@ -3,7 +3,7 @@
 ## Starting the Jupyter Notebook App
 
 ```
-$ cd ~/python-playground
+$ cd ~/Code/python-playground
 $ jupyter notebook
 ```
 
