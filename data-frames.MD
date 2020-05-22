@@ -136,6 +136,33 @@ df['users'].to_numpy()
 df.users.to_numpy()
 ```
 
+## Methods work on data frame as well as columns
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'col1': [1, 2, 3],
+    'col2': [4, 5, 6]
+})
+
+# To sum all of the values
+print(df.to_numpy().sum())
+# 21
+
+# To return a data frame with the sum of each column
+print(df.sum())
+# col1     6
+# col2    15
+# dtype: int64
+
+# To sum a specific column:
+print(df.col1.sum())
+# 6
+```
+
+```
+
 ## Selecting rows
 
 All columns for a row by its label:
