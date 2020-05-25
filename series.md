@@ -23,3 +23,30 @@ data1 + data2
 # c    14
 # d    17
 ```
+
+## Sorting
+
+Ascending
+
+```python
+data1 = pd.Series([5, 2, 3,7], index=['a', 'b', 'c', 'd'])
+print(data1.sort_values())
+
+# b    2
+# c    3
+# a    5
+# d    7
+```
+
+Descending
+
+```python
+data1 = pd.Series([5, 2, 3,7], index=['a', 'b', 'c', 'd'])
+print(data1.sort_values(ascending=False))
+
+# d    7
+# a    5
+# c    3
+# b    2
+```
+
