@@ -209,6 +209,59 @@ df[np.logical_and(df['revenue'] > 1000, df['revenue'] < 2000)]
 # 2020-04-01     1234     68
 ```
 
+## Subsetting by index number
+
+```python
+mydict = [{'a': 1, 'b': 2, 'c': 3, 'd': 4},
+          {'a': 100, 'b': 200, 'c': 300, 'd': 400},
+          {'a': 1000, 'b': 2000, 'c': 3000, 'd': 4000 }]
+
+df = pd.DataFrame(mydict)
+#       a     b     c     d
+# 0     1     2     3     4
+# 1   100   200   300   400
+# 2  1000  2000  3000  4000
+
+# Select one or more rows as a data frame
+print(df.iloc[[0, 1]])
+#      a    b    c    d
+# 0    1    2    3    4
+# 1  100  200  300  400
+
+# General format
+# df.iloc[rows, columns]
+
+# Select a row as a series
+print(df.iloc[0])
+# a    1
+# b    2
+# c    3
+# d    4
+
+# Select a column as a series
+print(df.iloc[:, 1])
+# 0       2
+# 1     200
+# 2    2000
+
+# Select a specific value
+print(df.iloc[1, 1])
+# 200
+
+# Select multiple rows as a data frame
+print(df.iloc[0:2])
+#      a    b    c    d
+# 0    1    2    3    4
+# 1  100  200  300  400
+
+# Select multiple columns as a data frame
+print(df.iloc[:, 0:2])
+#       a     b
+# 0     1     2
+# 1   100   200
+# 2  1000  2000
+```
+
 ## Adding a column
 
 By applying a function to an existing column value:
