@@ -287,3 +287,18 @@ df = df.dropna()
 #    revenue  users
 # 0   1234.0     68
 ```
+
+## Merging two data frames
+
+```python
+data1 = pd.Series([5, 2, 3,7], index=['a', 'b', 'c', 'd'])
+data2 = pd.Series([10, 11, 12, 13], index=['d', 'c', 'b', 'a'])
+
+df = pd.concat([data1, data2], axis=1, keys=['col1', 'col2'])
+
+#    col1  col2
+# a     5    13
+# b     2    12
+# c     3    11
+# d     7    10
+```
