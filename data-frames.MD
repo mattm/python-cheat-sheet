@@ -229,6 +229,22 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 # 1     5678     84                 5961.9
 ```
 
+## Modifying a column:
+
+```python
+df = pd.DataFrame({
+    'name': ["cat", "dog", "cow", "lion"]
+})
+
+# Option 1:
+df['name'] = df['name'].apply(lambda item: item.replace('c', 'm'))
+
+# Option 2:
+# for i, name in enumerate(df['name']):
+#     df['name'][i] = df['name'][i].replace('c', 'm')
+```
+
+
 ## Removing a column
 
 ```python
