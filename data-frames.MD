@@ -282,6 +282,23 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 # 1     5678     84                 5961.9
 ```
 
+On some data sets it's necessary to create a copy of the original data frame before manipulating it:
+
+```python
+import pandas as pd
+
+test_df = pd.read_csv("test.csv")
+
+# The copy is needed because we're going to be modifying the subset 
+# Omitting it will lead to a SettingWithCopyWarning warning
+df = test_df[['PassengerId', 'Sex']].copy()
+
+df['Survived'] = df['Sex'].apply(lambda gender: 0 if gender == "male" else 1)
+
+df = df.drop('Sex', axis=1)
+df
+```
+
 ## Modifying a column
 
 ```python
