@@ -229,7 +229,7 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 # 1     5678     84                 5961.9
 ```
 
-## Modifying a column:
+## Modifying a column
 
 ```python
 df = pd.DataFrame({
