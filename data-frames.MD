@@ -293,7 +293,7 @@ test_df = pd.read_csv("test.csv")
 # Omitting it will lead to a SettingWithCopyWarning warning
 df = test_df[['PassengerId', 'Sex']].copy()
 
-df['Survived'] = df['Sex'].apply(lambda gender: 0 if gender == "male" else 1)
+df['Survived'] = df['Sex'].apply(lambda gender: int(gender == "female"))
 
 df = df.drop('Sex', axis=1)
 df
