@@ -313,7 +313,7 @@ df['name'] = df['name'].apply(lambda item: item.replace('c', 'm'))
 df = df.drop('revenue', axis=1)
 
 # Multiple columns:
-df = df.drop(['revenue', 'users'] axis=1)
+df = df.drop(['revenue', 'users'], axis=1)
 ```
 
 ## Renaming columns
