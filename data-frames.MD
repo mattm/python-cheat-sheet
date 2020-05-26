@@ -428,7 +428,7 @@ df
 
 You can also map against a series:
 
-```
+```python
 df = pd.DataFrame({
     'vertical': [0, 0, 3, 2, 1, 3, 0]
 })
