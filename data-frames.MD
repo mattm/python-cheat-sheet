@@ -378,3 +378,35 @@ df = pd.concat([data1, data2], axis=1, keys=['col1', 'col2'])
 # c     3    11
 # d     7    10
 ```
+
+## Grouping
+
+This will return a dataframe:
+
+```python
+X.groupby('Pclass').mean()
+```
+
+```
+             Sex        Age     SibSp     Parch       Fare  Embarked_Q 
+Pclass                                                                   
+1       0.435185  37.048118  0.416667  0.356481  84.154687    0.009259   
+2       0.413043  29.866958  0.402174  0.380435  20.662183    0.016304   
+3       0.293279  26.403259  0.615071  0.393075  13.675550    0.146640  
+```
+
+Can also grab a series from this:
+
+```python
+X.groupby('Pclass').mean().Age
+```
+
+```
+Pclass
+1    37.048118
+2    29.866958
+3    26.403259
+```
+
+
+
