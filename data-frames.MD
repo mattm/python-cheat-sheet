@@ -506,3 +506,35 @@ Both result in:
 3     10             4-10
 4     15              11+
 ```
+
+## Sorting
+
+```python
+import pandas as pd
+
+df = pd.DataFrame({
+    'score': [5, 10, 2]
+})
+
+df = df.sort_values('score')
+```
+
+```
+   score
+2      2
+0      5
+1     10
+```
+
+Or descending:
+
+```python
+df = df.sort_values('score', ascending=False)
+```
+
+```
+   score
+1     10
+0      5
+2      2
+```
