@@ -408,5 +408,32 @@ Pclass
 3    26.403259
 ```
 
+## Mapping column values to a dict
 
+```python
+df = pd.DataFrame({
+    'vertical': [0, 0, 3, 2, 1, 3, 0]
+})
+
+mapping = {
+    0: 'work',
+    1: 'school',
+    2: 'teaching',
+    3: 'personal-use'
+}
+
+df['vertical'] = df['vertical'].map(mapping)
+df
+```
+
+```
+       vertical
+0          work
+1          work
+2  personal-use
+3      teaching
+4        school
+5  personal-use
+6          work
+```
 
