@@ -5,8 +5,6 @@
 With a default interger indeces:
 
 ```python
-import pandas as pd
-
 data = { 
   'month': ['2020-04-01', '2020-05-01'], 
   'revenue': [1234, 5678],
@@ -22,7 +20,6 @@ df = pd.DataFrame(data)
 With named indeces:
 
 ```python
-import pandas as pd
 data = {
   'revenue': [1234, 5678],
   'users': [68, 84] 
@@ -85,7 +82,6 @@ max    5678.000000  84.000000
 ## Importing from a CSV
 
 ```python
-import pandas as pd
 df = pd.read_csv("data.csv")
 ```
 
@@ -139,8 +135,6 @@ df.users.to_numpy()
 ## Methods work on data frame as well as columns
 
 ```python
-import pandas as pd
-
 df = pd.DataFrame({
     'col1': [1, 2, 3],
     'col2': [4, 5, 6]
@@ -267,7 +261,6 @@ print(df.iloc[:, 0:2])
 By applying a function to an existing column value:
 
 ```python
-import pandas as pd
 
 data = {
   'revenue': [1234, 5678],
@@ -285,8 +278,6 @@ df['next_month_projection'] = df['revenue'].apply(lambda num: num * 1.05)
 On some data sets it's necessary to create a copy of the original data frame before manipulating it:
 
 ```python
-import pandas as pd
-
 test_df = pd.read_csv("test.csv")
 
 # The copy is needed because we're going to be modifying the subset 
@@ -334,9 +325,6 @@ df.rename(columns = {"old_name": "new name"})
 ## Replacing values in a column
 
 ```python
-import pandas as pd
-import numpy as np
-
 df = pd.DataFrame({
   'revenue': [1234, 0],
   'users': [68, 84] 
@@ -361,9 +349,6 @@ df[df == '?'] = np.nan
 ## Removing all rows containing NA values
 
 ```python
-import pandas as pd
-import numpy as np
-
 df = pd.DataFrame({
   'revenue': [1234, np.nan],
   'users': [68, 84] 
