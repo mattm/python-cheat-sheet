@@ -451,3 +451,58 @@ df
 6          work
 ```
 
+## Mapping with conditions
+
+If just two conditions, use `np.where`:
+
+```python
+df = pd.DataFrame({
+    'users': [1, 3, 5, 10, 15]
+})
+
+df['user_count_range'] = np.where(df['users'] <= 10, '1-10', '11+')
+```
+
+```
+   users user_count_range
+0      1             1-10
+1      3             1-10
+2      5             1-10
+3     10             1-10
+4     15              11+
+```
+
+Otherwise if multiple conditions, use `np.select`:
+
+```python
+df = pd.DataFrame({
+    'users': [1, 3, 5, 10, 15]
+})
+
+conditions = [df['users'] <= 3, df['users'] <= 10, df['users'] > 10]
+choices = ['1-3', '4-10', '11+']
+df['user_count_range'] = np.select(conditions, choices)
+```
+
+Which is the same as:
+
+```python
+df = pd.DataFrame({
+    'users': [1, 3, 5, 10, 15]
+})
+
+conditions = [df['users'] <= 3, df['users'] <= 10]
+choices = ['1-3', '4-10']
+df['user_count_range'] = np.select(conditions, choices, '11+')
+```
+
+Both result in:
+
+```
+   users user_count_range
+0      1              1-3
+1      3              1-3
+2      5             4-10
+3     10             4-10
+4     15              11+
+```
