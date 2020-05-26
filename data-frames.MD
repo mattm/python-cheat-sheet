@@ -305,6 +305,11 @@ df['name'] = df['name'].apply(lambda item: item.replace('c', 'm'))
 #     df['name'][i] = df['name'][i].replace('c', 'm')
 ```
 
+## Filling NaN values in a column
+
+```python
+X['Age'].fillna(np.mean(X['Age']), inplace=True)
+```
 
 ## Removing a column
 
