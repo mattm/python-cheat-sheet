@@ -426,6 +426,20 @@ df['vertical'] = df['vertical'].map(mapping)
 df
 ```
 
+You can also map against a series:
+
+```
+df = pd.DataFrame({
+    'vertical': [0, 0, 3, 2, 1, 3, 0]
+})
+
+series = pd.Series(['work', 'school', 'teaching', 'personal-use'])
+
+# This works because the series indeces are 0, 1, 2, 3
+df['vertical'] = df['vertical'].map(series)
+df
+```
+
 ```
        vertical
 0          work
