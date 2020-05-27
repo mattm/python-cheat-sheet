@@ -78,7 +78,7 @@ sns.heatmap(df.corr(), square=True, cmap='RdYlGn')
 
 ## Seaborne histogram
 
-```
+```python
 values = np.random.randint(0, 11, size=100)
 sns.distplot(values, bins=11, kde=False, axlabel="Random Number", color="#0343DF")
 ```
