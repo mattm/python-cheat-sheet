@@ -66,3 +66,16 @@ data.value_counts()
 f    3
 m    2
 ```
+
+## Casting boolean to int
+
+```python
+data = pd.Series([True, False, True])
+data.astype(int)
+```
+
+```
+0    1
+1    0
+2    1
+```
