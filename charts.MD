@@ -76,9 +76,20 @@ plt.style.use('ggplot')
 sns.heatmap(df.corr(), square=True, cmap='RdYlGn')
 ```
 
-## Seaborne histogram
+## Seaborn histogram
 
 ```python
 values = np.random.randint(0, 11, size=100)
 sns.distplot(values, bins=11, kde=False, axlabel="Random Number", color="#0343DF")
+```
+
+## Two Seaborn charts side by side
+
+```python
+values1 = np.random.normal(size=1000)
+values2 = np.random.normal(size=1000)
+
+fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(10, 4))
+ax = sns.distplot(values1, ax=axes[0])
+ax = sns.distplot(values2, ax=axes[1])
 ```
