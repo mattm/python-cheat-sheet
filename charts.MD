@@ -72,7 +72,7 @@ plt.style.use('ggplot')
 
 ## Correlation heatmap
 
-```
+```python
 sns.heatmap(df.corr(), square=True, cmap='RdYlGn')
 ```
 
