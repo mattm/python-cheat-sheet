@@ -52,3 +52,17 @@ a    5
 c    3
 b    2
 ```
+
+## Viewing value counts
+
+```python
+import pandas as pd
+
+data = pd.Series(["m", "f", "m", "f", "f"])
+data.value_counts()
+```
+
+```
+f    3
+m    2
+```
