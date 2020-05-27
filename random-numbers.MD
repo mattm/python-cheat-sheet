@@ -25,5 +25,5 @@ np.random.rand(size = 10)
 ## Generate a random integer between 0 and 10
 
 ```
-print(np.random.randint(0, 11, size=100))
+np.random.randint(0, 11, size=100)
 ```
