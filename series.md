@@ -56,8 +56,6 @@ b    2
 ## Viewing value counts
 
 ```python
-import pandas as pd
-
 data = pd.Series(["m", "f", "m", "f", "f"])
 data.value_counts()
 ```
@@ -65,6 +63,17 @@ data.value_counts()
 ```
 f    3
 m    2
+```
+
+## Determining the most common value
+
+```python
+data = pd.Series(["m", "f", "m", "f", "f"])
+data.mode()[0]
+```
+
+```
+'f'
 ```
 
 ## Casting boolean to int
