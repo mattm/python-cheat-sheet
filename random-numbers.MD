@@ -27,3 +27,9 @@ np.random.rand(size = 10)
 ```python
 np.random.randint(0, 11, size=100)
 ```
+
+## Generate random numbers from a normal distribution
+
+```python
+np.random.normal(size=100)
+```
