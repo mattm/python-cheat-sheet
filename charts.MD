@@ -125,3 +125,19 @@ g = sb.FacetGrid(df, col="smoker", row="sex", hue="size")
 g.map(plt.scatter, "total_bill", "tip")
 plt.show()
 ```
+
+## Point Plots
+
+The point is the mean and the bars represent the confidence interval:
+
+```python
+import seaborn as sns
+tips = sns.load_dataset("tips")
+ax = sns.pointplot(x="time", y="total_bill", data=tips)
+```
+
+Can also segment the chart by other variables:
+
+```python
+ax = sns.pointplot(x="time", y="total_bill", hue="smoker", data=tips)
+```
