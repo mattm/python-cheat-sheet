@@ -520,3 +520,14 @@ result_df = results.sort_values(by='Score', ascending=False)
 result_df = result_df.set_index('Score')
 result_df.head(9)
 ```
+
+## Random Forest Feature Importance
+
+```python
+importances = pd.DataFrame({
+    "feature": X_train.columns,
+    "importance": np.round(random_forest.feature_importances_, 3)
+})
+importances = importances.sort_values("importance", ascending=False).set_index("feature")
+importances.head(15)
+```
