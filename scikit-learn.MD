@@ -454,3 +454,69 @@ print("Accuracy: {}".format(cv.score(X_test, y_test)))
 print(classification_report(y_test, y_pred))
 print("Tuned Model Parameters: {}".format(cv.best_params_))
 ```
+
+## Measuring accuracy of different models
+
+```python
+from sklearn import linear_model
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import Perceptron
+from sklearn.linear_model import SGDClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.svm import SVC, LinearSVC
+from sklearn.naive_bayes import GaussianNB
+
+# SGDClassifier
+sgd = linear_model.SGDClassifier(max_iter=5, tol=None)
+sgd.fit(X_train, y_train)
+acc_sgd = sgd.score(X_train, y_train)
+
+# Random Forest
+random_forest = RandomForestClassifier(n_estimators=100)
+random_forest.fit(X_train, y_train)
+acc_random_forest = random_forest.score(X_train, y_train)
+
+# Logistic Regression
+logreg = LogisticRegression()
+logreg.fit(X_train, y_train)
+acc_log = logreg.score(X_train, y_train)
+
+# KNN
+knn = KNeighborsClassifier(n_neighbors=9)
+knn.fit(X_train, y_train)
+acc_knn = knn.score(X_train, y_train)
+
+# Gaussian
+gaussian = GaussianNB()
+gaussian.fit(X_train, y_train)
+acc_gaussian = gaussian.score(X_train, y_train)
+
+# Perceptron
+perceptron = Perceptron(max_iter=5)
+perceptron.fit(X_train, y_train)
+acc_perceptron = perceptron.score(X_train, y_train)
+
+# Support Vector Machine
+linear_svc = LinearSVC()
+linear_svc.fit(X_train, y_train)
+acc_linear_svc = linear_svc.score(X_train, y_train)
+
+# Decision Tree
+decision_tree = DecisionTreeClassifier()
+decision_tree.fit(X_train, y_train)
+acc_decision_tree = decision_tree.score(X_train, y_train)
+
+results = pd.DataFrame({
+    'Model': ['Support Vector Machines', 'KNN', 'Logistic Regression', 
+              'Random Forest', 'Naive Bayes', 'Perceptron', 
+              'Stochastic Gradient Decent', 
+              'Decision Tree'],
+    'Score': [acc_linear_svc, acc_knn, acc_log, 
+              acc_random_forest, acc_gaussian, acc_perceptron, 
+              acc_sgd, acc_decision_tree]})
+result_df = results.sort_values(by='Score', ascending=False)
+result_df = result_df.set_index('Score')
+result_df.head(9)
+```
