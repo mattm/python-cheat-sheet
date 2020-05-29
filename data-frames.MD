@@ -385,6 +385,9 @@ This will return a dataframe:
 
 ```python
 X.groupby('Pclass').mean()
+
+# or
+X.groupby('Pclass').agg('mean')
 ```
 
 ```
@@ -398,7 +401,7 @@ Pclass
 Can also grab a series from this:
 
 ```python
-X.groupby('Pclass').mean().Age
+X.groupby('Pclass').mean()['Age']
 ```
 
 ```
@@ -406,6 +409,19 @@ Pclass
 1    37.048118
 2    29.866958
 3    26.403259
+```
+
+Or grab it as a data frame:
+
+```python
+X.groupby('Pclass').mean()[['Age']]
+```
+
+```
+              Age
+Sex              
+female  27.915709
+male    30.726645
 ```
 
 ## Mapping column values to a dict
