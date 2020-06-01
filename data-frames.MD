@@ -575,3 +575,94 @@ df.sample(5)
 ```python
 df[df["Age"].notnull()]
 ```
+
+## Using `loc` to subset a dataframe
+
+```python
+data = {
+    'country':['USA', 'China', 'Japan', 'Germany', 'UK', 'India'],
+    'continent':['North America','Asia','Asia','Europe','Europe','Asia'],
+    'gdp':[19390604, 12237700, 4872137, 3677439, 2622434, 2597491],
+    'population':[322179605, 1403500365, 127748513, 81914672, 65788574, 1324171354]
+}
+df = pd.DataFrame(data)
+df = df.set_index('country')
+```
+
+```
+             continent       gdp  population
+country                                     
+USA      North America  19390604   322179605
+China             Asia  12237700  1403500365
+Japan             Asia   4872137   127748513
+Germany         Europe   3677439    81914672
+UK              Europe   2622434    65788574
+India             Asia   2597491  1324171354
+```
+
+First argument to `loc` lets you select the rows, second argument the columns. If you leave off the columns, it will select all of the columns by default.
+
+Single brackets *with a single row label* will return a series:
+
+```python
+df.loc['USA']
+```
+
+```
+continent     North America
+gdp                19390604
+population        322179605
+Name: USA, dtype: object
+```
+
+Double brackets will always return a data frame:
+
+```
+             continent       gdp  population
+country                                     
+USA      North America  19390604   322179605
+```
+
+And selecting multiple rows will return a data frame, even with single brackets
+
+```python
+df.loc["USA":"Japan"]
+```
+
+```
+             continent       gdp  population
+country                                     
+USA      North America  19390604   322179605
+China             Asia  12237700  1403500365
+Japan             Asia   4872137   127748513
+```
+
+If you put a colon after the label, it will select that and everything after it:
+
+```python
+df.loc["Japan":]
+```
+
+```
+        continent      gdp  population
+country                               
+Japan        Asia  4872137   127748513
+Germany    Europe  3677439    81914672
+UK         Europe  2622434    65788574
+India        Asia  2597491  1324171354
+```
+
+Same with the columns:
+
+```python
+df.loc["Japan":, "gdp":]
+```
+
+```
+             gdp  population
+country                     
+Japan    4872137   127748513
+Germany  3677439    81914672
+UK       2622434    65788574
+India    2597491  1324171354
+```
