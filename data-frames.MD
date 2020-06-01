@@ -666,3 +666,13 @@ Germany  3677439    81914672
 UK       2622434    65788574
 India    2597491  1324171354
 ```
+
+We can change individual values this way:
+
+```python
+# Using the label:
+df.loc["Japan", "gdp"] = -1
+
+# Or using a condition on a column value:
+df.loc[df["continent"] == "Asia", "gdp"] = -1
+```
