@@ -557,3 +557,15 @@ df = df.sort_values('score', ascending=False)
 0      5
 2      2
 ```
+
+## Sampling rows
+
+```python
+
+# Default is 1:
+df.sample()
+
+# But can get more:
+
+df.sample(5)
+```
