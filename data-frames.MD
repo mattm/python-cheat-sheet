@@ -569,3 +569,9 @@ df.sample()
 
 df.sample(5)
 ```
+
+## Grabbing rows that don't have a null value in a specific column
+
+```python
+df[df["Age"].notnull()]
+```
