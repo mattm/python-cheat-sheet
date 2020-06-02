@@ -576,6 +576,12 @@ df.sample(5)
 df[df["Age"].notnull()]
 ```
 
+## Grabbing rows where a value contains a certain string
+
+```python
+df[df["Name"].str.contains("test")]
+```
+
 ## Using `loc` to subset a dataframe
 
 ```python
