@@ -576,6 +576,12 @@ df.sample(5)
 df[df["Age"].notnull()]
 ```
 
+## Filling in null values with the media for a segment
+
+```python
+train["Age"].fillna(train.groupby(["Pclass", "Sex"])["Age"].transform('median'))
+```
+
 ## Grabbing rows where a value contains a certain string
 
 ```python
