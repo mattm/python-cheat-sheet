@@ -213,6 +213,15 @@ print("Recall:", recall)           # The % of conversions that were correctly id
 print("Accuracy:", accuracy)       # The overall % correct. Same as knn.score(X_test, y_test)
 ```
 
+## Plotting a confusion matrix
+
+```python
+from sklearn.metrics import plot_confusion_matrix
+
+plot_confusion_matrix(clf, X_train, y_train, display_labels=["Died", "Survived"], cmap="YlGn")
+plt.show()
+```
+
 ## ROC Curves
 
 ```python
