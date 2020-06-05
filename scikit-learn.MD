@@ -531,3 +531,25 @@ importances = pd.DataFrame({
 importances = importances.sort_values("importance", ascending=False).set_index("feature")
 importances.head(15)
 ```
+
+## Gridsearch with a pipeline
+
+```python
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.model_selection import GridSearchCV
+
+pipe = make_pipeline(MinMaxScaler(), XGBClassifier())
+param_grid = {
+    "xgbclassifier__max_depth": [1, 3, 5],
+    "xgbclassifier__n_estimators": [10, 100, 1000],
+    "xgbclassifier__learning_rate": [0.01, 0.05, 0.1]
+}
+grid = GridSearchCV(pipe, param_grid, cv=5)
+grid.fit(X_train, y_train)
+print(" Tuned Parameters: {}".format(grid.best_params_)) 
+print(" Best score is {:.2f}".format(grid.best_score_))
+
+...
+predictions = grid.predict(X_test)
+```
