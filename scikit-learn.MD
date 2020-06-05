@@ -222,6 +222,8 @@ plot_confusion_matrix(clf, X_train, y_train, display_labels=["Died", "Survived"]
 plt.show()
 ```
 
+!https://github.com/mattm/python-cheat-sheet/blob/master/images/plot_confusion_matrix.png?raw=true
+
 ## ROC Curves
 
 ```python
