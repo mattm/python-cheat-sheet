@@ -605,7 +605,6 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 
 df = pd.DataFrame({
-    "user_id": [1, 10, 5, 11],
     "vertical": ['work','student','professional-use','student']
 })
 
