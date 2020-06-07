@@ -609,9 +609,10 @@ df = pd.DataFrame({
     "vertical_code": [1, 3, 1, 2]
 })
 
-ohe = OneHotEncoder(handle_unknown='ignore')
-ohe_df = pd.DataFrame(ohe.fit_transform(df[['vertical_code']]).toarray())
+ohe = OneHotEncoder(sparse=False)
+ohe_df = pd.DataFrame(ohe.fit_transform(df[['vertical_code']]))
 df = df.join(ohe_df)
+print(df)
 ```
 
 ```
@@ -633,8 +634,9 @@ df = pd.DataFrame({
     "vertical": ['work','student','professional-use','student']
 })
 
-ohe = OneHotEncoder()
-ohe_df = pd.DataFrame(ohe.fit_transform(df[['vertical']]).toarray())
+# sparse=False will cause it to return an array (vs a sparse matrix otherwise)
+ohe = OneHotEncoder(sparse=False)
+ohe_df = pd.DataFrame(ohe.fit_transform(df[['vertical']]))
 df = df.join(ohe_df)
 print(df)
 ```
@@ -650,20 +652,21 @@ print(df)
 ### Unencoded values
 
 ```python
+import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
-ohe = OneHotEncoder()
+ohe = OneHotEncoder(sparse=False)
 
 print("Transformation on fitted data:")
 s1 = np.array([1, 3, 1, 2]).reshape(-1, 1)
 enc = ohe.fit(s1)
-transformed1 = enc.transform(s1).toarray()
+transformed1 = enc.transform(s1)
 print(transformed1)
 
 print("\nTransformation on new data with encoded values:")
 s2 = np.array([1]).reshape(-1, 1)
-transformed2 = enc.transform(s2).toarray()
+transformed2 = enc.transform(s2)
 print(transformed2)
 
 # As-is, this will result in an error
