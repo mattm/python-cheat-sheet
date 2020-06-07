@@ -593,3 +593,35 @@ df['vertical_encoded'] = enc.fit_transform(df['vertical'])
 Because we're calling `fit_transform` on each column, it's refitting the label encoder to each column's values (and not using the previous fitting).
 
 Downside of label encoding is that "the numeric values can be misinterpreted by algorithms as having some sort of hierarchy/order in them".
+
+# OneHotEncoder
+
+OneHotEncoder converts a column of integers to their own columns:
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+
+df = pd.DataFrame({
+    "user_id": [1, 10, 5, 11],
+    "vertical": ['work','student','professional-use','student']
+})
+
+enc = LabelEncoder()
+df['vertical_encoded'] = enc.fit_transform(df['vertical'])
+
+ohe = OneHotEncoder(handle_unknown='ignore')
+enc_df = pd.DataFrame(ohe.fit_transform(df[['vertical_encoded']]).toarray())
+df = df.join(enc_df)
+df
+```
+
+```
+   user_id          vertical  vertical_encoded    0    1    2
+0        1              work                 2  0.0  0.0  1.0
+1       10           student                 1  0.0  1.0  0.0
+2        5  professional-use                 0  1.0  0.0  0.0
+3       11           student                 1  0.0  1.0  0.0
+```
