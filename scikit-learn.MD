@@ -564,3 +564,30 @@ print(" Best score is {:.2f}".format(grid.best_score_))
 ...
 predictions = grid.predict(X_test)
 ```
+
+## Using LabelEncoder
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+
+df = pd.DataFrame({
+    "user_id": [1, 10, 5, 11],
+    "vertical": ['work','student','professional-use','student']
+})  
+
+enc = LabelEncoder()
+df['user_id_encoded'] = enc.fit_transform(df['user_id'])
+df['vertical_encoded'] = enc.fit_transform(df['vertical'])
+```
+
+```
+   user_id          vertical  user_id_encoded  vertical_encoded
+0        1              work                0                 2
+1       10           student                2                 1
+2        5  professional-use                1                 0
+3       11           student                3                 1
+```
+
+Because we're calling `fit_transform` on each column, it's refitting the label encoder to each column's values (and not using the previous fitting).
