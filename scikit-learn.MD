@@ -598,6 +598,8 @@ Downside of label encoding is that "the numeric values can be misinterpreted by 
 
 OneHotEncoder converts a column of values and encodes the values in their own columns:
 
+### Integers
+
 ```python
 import pandas as pd
 import numpy as np
@@ -620,7 +622,7 @@ df = df.join(ohe_df)
 3              2  0.0  1.0  0.0
 ```
 
-## String example
+### String example
 
 ```
 import pandas as pd
@@ -643,4 +645,46 @@ print(df)
 1           student  0.0  1.0  0.0
 2  professional-use  1.0  0.0  0.0
 3           student  0.0  1.0  0.0
+```
+
+### Unencoded values
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import OneHotEncoder
+
+ohe = OneHotEncoder()
+
+print("Transformation on fitted data:")
+s1 = np.array([1, 3, 1, 2]).reshape(-1, 1)
+enc = ohe.fit(s1)
+transformed1 = enc.transform(s1).toarray()
+print(transformed1)
+
+print("\nTransformation on new data with encoded values:")
+s2 = np.array([1]).reshape(-1, 1)
+transformed2 = enc.transform(s2).toarray()
+print(transformed2)
+
+# As-is, this will result in an error
+# We can avoid the error by passing handle_unknown="ignore" to the OneHotEncoder constractuor
+print("\nTransformation on new data with unencoded values:")
+s3 = np.array([5]).reshape(-1, 1)
+transformed3 = enc.transform(s3).toarray()
+```
+
+```
+Transformation on fitted data:
+[[1. 0. 0.]
+ [0. 0. 1.]
+ [1. 0. 0.]
+ [0. 1. 0.]]
+
+Transformation on new data with encoded values:
+[[1. 0. 0.]]
+
+Transformation on new data with unencoded values:
+
+ValueError: Found unknown categories [5] in column 0 during transform
 ```
