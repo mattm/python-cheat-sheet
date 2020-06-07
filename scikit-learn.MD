@@ -596,31 +596,51 @@ Downside of label encoding is that "the numeric values can be misinterpreted by 
 
 # OneHotEncoder
 
-OneHotEncoder converts a column of integers to their own columns:
+OneHotEncoder converts a column of values and encodes the values in their own columns:
 
 ```python
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
+
+df = pd.DataFrame({
+    "vertical_code": [1, 3, 1, 2]
+})
+
+ohe = OneHotEncoder(handle_unknown='ignore')
+ohe_df = pd.DataFrame(ohe.fit_transform(df[['vertical_code']]).toarray())
+df = df.join(ohe_df)
+```
+
+```
+   vertical_code    0    1    2
+0              1  1.0  0.0  0.0
+1              3  0.0  0.0  1.0
+2              1  1.0  0.0  0.0
+3              2  0.0  1.0  0.0
+```
+
+## String example
+
+```
+import pandas as pd
+import numpy as np
 from sklearn.preprocessing import OneHotEncoder
 
 df = pd.DataFrame({
     "vertical": ['work','student','professional-use','student']
 })
 
-enc = LabelEncoder()
-df['vertical_encoded'] = enc.fit_transform(df['vertical'])
-
-ohe = OneHotEncoder(handle_unknown='ignore')
-enc_df = pd.DataFrame(ohe.fit_transform(df[['vertical_encoded']]).toarray())
-df = df.join(enc_df)
-df
+ohe = OneHotEncoder()
+ohe_df = pd.DataFrame(ohe.fit_transform(df[['vertical']]).toarray())
+df = df.join(ohe_df)
+print(df)
 ```
 
 ```
-   user_id          vertical  vertical_encoded    0    1    2
-0        1              work                 2  0.0  0.0  1.0
-1       10           student                 1  0.0  1.0  0.0
-2        5  professional-use                 0  1.0  0.0  0.0
-3       11           student                 1  0.0  1.0  0.0
+           vertical    0    1    2
+0              work  0.0  0.0  1.0
+1           student  0.0  1.0  0.0
+2  professional-use  1.0  0.0  0.0
+3           student  0.0  1.0  0.0
 ```
