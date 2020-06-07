@@ -591,3 +591,5 @@ df['vertical_encoded'] = enc.fit_transform(df['vertical'])
 ```
 
 Because we're calling `fit_transform` on each column, it's refitting the label encoder to each column's values (and not using the previous fitting).
+
+Downside of label encoding is that "the numeric values can be misinterpreted by algorithms as having some sort of hierarchy/order in them".
