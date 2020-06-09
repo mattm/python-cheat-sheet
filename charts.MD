@@ -153,3 +153,34 @@ _ = sns.heatmap(train.corr())
 ```
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/correlation-matrix.png?raw=true)
+
+## Correlations for a single feature
+
+```python
+import pandas as pd
+import matplotlib.pyplot as plt
+
+train = pd.read_csv("train.csv")
+corr = train.corr().abs().unstack().sort_values(ascending=False).reset_index()
+corr.rename(columns={"level_0": "Feature 1", "level_1": "Feature 2", 0: "Correlation"}, inplace=True)
+survival_correlations = corr[corr["Feature 1"] == "Survived"]
+print(survival_correlations)
+
+plt.bar(survival_correlations["Feature 2"], survival_correlations["Correlation"])
+plt.title("Survival Correlations")
+plt.ylabel("Correlation")
+plt.xlabel("Feature")
+plt.xticks(rotation=90)
+plt.show()
+```
+
+```
+   Feature 1    Feature 2  Correlation
+2   Survived     Survived     1.000000
+14  Survived       Pclass     0.338481
+17  Survived         Fare     0.257307
+30  Survived        Parch     0.081629
+32  Survived          Age     0.077221
+37  Survived        SibSp     0.035322
+45  Survived  PassengerId     0.005007
+```
