@@ -721,7 +721,7 @@ Riker    1
 
 Resetting the index will take the existing index and make a column from it:
 
-```
+```python
 df = df.reset_index()
 ```
 
