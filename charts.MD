@@ -141,3 +141,14 @@ Can also segment the chart by other variables:
 ```python
 ax = sns.pointplot(x="time", y="total_bill", hue="smoker", data=tips)
 ```
+
+## Correlation Matrix
+
+```python
+import pandas as pd
+import seaborn as sns
+
+train = pd.read_csv("train.csv")
+_ = sns.heatmap(train.corr())
+```
+
