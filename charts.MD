@@ -152,3 +152,4 @@ train = pd.read_csv("train.csv")
 _ = sns.heatmap(train.corr())
 ```
 
+`[](https://github.com/mattm/python-cheat-sheet/blob/master/images/correlation-matrix.png?raw=true)
