@@ -688,3 +688,61 @@ df.loc["Japan", "gdp"] = -1
 # Or using a condition on a column value:
 df.loc[df["continent"] == "Asia", "gdp"] = -1
 ```
+
+## Setting and reseting an index
+
+```python
+df = pd.DataFrame({
+    "name": ["Mason", "Ava", "Riker"],
+    "age": [5, 4, 1],
+})
+```
+
+```
+    name  age
+0  Mason    5
+1    Ava    4
+2  Riker    1
+```
+
+Setting the index:
+
+```python
+df = df.set_index("name")
+```
+
+```
+       age
+name      
+Mason    5
+Ava      4
+Riker    1
+```
+
+Resetting the index will take the existing index and make a column from it:
+
+```
+df = df.reset_index()
+```
+
+```
+    name  age
+0  Mason    5
+1    Ava    4
+2  Riker    1
+```
+
+But we can also drop it:
+
+```python
+df = df.reset_index(drop=True)
+```
+
+In which case it is completely removed:
+
+```
+   age
+0    5
+1    4
+2    1
+```
