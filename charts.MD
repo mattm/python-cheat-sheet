@@ -184,3 +184,5 @@ plt.show()
 37  Survived        SibSp     0.035322
 45  Survived  PassengerId     0.005007
 ```
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/correlation-bar-chart.png?raw=true)
