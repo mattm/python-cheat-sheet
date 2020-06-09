@@ -582,6 +582,12 @@ df[df["Age"].notnull()]
 train["Age"].fillna(train.groupby(["Pclass", "Sex"])["Age"].transform('median'))
 ```
 
+or
+
+```python
+train["Age"] = train.groupby(['Pclass', 'Sex'])['Age'].apply(lambda x: x.fillna(x.median()))
+```
+
 ## Grabbing rows where a value contains a certain string
 
 ```python
