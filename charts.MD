@@ -186,3 +186,29 @@ plt.show()
 ```
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/correlation-bar-chart.png?raw=true)
+
+## Stacked bar chart
+
+Assuming we have the data in a format like this:
+
+```
+Pclass     1      2      3
+Deck                      
+A       15.0    0.0    0.0
+B       47.0    0.0    0.0
+C       59.0    0.0    0.0
+D       29.0    4.0    0.0
+E       25.0    4.0    3.0
+F        0.0    8.0    5.0
+G        0.0    0.0    4.0
+M       41.0  168.0  479.0
+```
+
+Then it's simply a matter of:
+
+```python
+_ = df.plot(kind='bar', stacked=True, title="Passengers by Deck")
+_.set_ylabel("Passengers")
+```
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stacked-bar-chart.png?raw=true)
