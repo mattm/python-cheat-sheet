@@ -752,3 +752,46 @@ In which case it is completely removed:
 1    4
 2    1
 ```
+
+## Pivoting
+
+We can take a data frame like this:
+
+```
+   Deck  Pclass  Passenger Count
+0     A       1               15
+1     B       1               47
+2     C       1               59
+3     D       1               29
+4     D       2                4
+5     E       1               25
+6     E       2                4
+7     E       3                3
+8     F       2                8
+9     F       3                5
+10    G       3                4
+11    M       1               41
+12    M       2              168
+13    M       3              479
+```
+
+And convert it to this:
+
+```
+Pclass     1      2      3
+Deck                      
+A       15.0    0.0    0.0
+B       47.0    0.0    0.0
+C       59.0    0.0    0.0
+D       29.0    4.0    0.0
+E       25.0    4.0    3.0
+F        0.0    8.0    5.0
+G        0.0    0.0    4.0
+M       41.0  168.0  479.0
+```
+
+Using this code:
+
+```python
+df.pivot(index='Deck', columns='Pclass')['Passenger Count'].fillna(0)
+```
