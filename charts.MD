@@ -222,3 +222,11 @@ Placing the legend on the right of the chart itself:
 ```python
 _.legend(loc='upper left', bbox_to_anchor=(1, 1), prop={'size': 15})
 ```
+
+## Setting the chart size
+
+Arguments are width and height:
+
+```python
+plt.figure(figsize=(10, 6))
+```
