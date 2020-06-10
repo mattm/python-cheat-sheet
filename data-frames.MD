@@ -870,3 +870,5 @@ Then can plot a stacked % bar chart:
 ```python
 by_deck_and_class_percent_transposed.plot(kind='bar', stacked=True, title="Passengers by Deck")
 ```
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stacked-bar-chart-percent.png)
