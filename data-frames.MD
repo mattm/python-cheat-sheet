@@ -775,7 +775,13 @@ We can take a data frame like this:
 13    M       3              479
 ```
 
-And convert it to this:
+Using this code:
+
+```python
+df.pivot(index='Deck', columns='Pclass')['Passenger Count'].fillna(0)
+```
+
+We can convert it to this so we can use it in a [stacked bar chart](https://github.com/mattm/python-cheat-sheet/blob/master/charts.MD#stacked-bar-chart):
 
 ```
 Pclass     1      2      3
@@ -790,8 +796,77 @@ G        0.0    0.0    4.0
 M       41.0  168.0  479.0
 ```
 
-Using this code:
+## Calculating percentages for a stacked bar chart
+
+Same data frame as above:
+
+```
+   Deck  Pclass  Passenger Count
+0     A       1               15
+1     B       1               47
+2     C       1               59
+3     D       1               29
+4     D       2                4
+5     E       1               25
+6     E       2                4
+7     E       3                3
+8     F       2                8
+9     F       3                5
+10    G       3                4
+11    M       1               41
+12    M       2              168
+13    M       3              479
+```
+
+We'll pivot this so the columns are the deck and the rows are the class counts:
 
 ```python
-df.pivot(index='Deck', columns='Pclass')['Passenger Count'].fillna(0)
+by_deck_and_class = df.pivot(index='Pclass', columns='Deck')['Passenger Count'].fillna(0)
+```
+
+```
+Deck       A     B     C     D     E    F    G      M
+Pclass                                               
+1       15.0  47.0  59.0  29.0  25.0  0.0  0.0   41.0
+2        0.0   0.0   0.0   4.0   4.0  8.0  0.0  168.0
+3        0.0   0.0   0.0   0.0   3.0  5.0  4.0  479.0
+```
+
+We can then conver the numbers to the % it represents within each columns:
+
+```python
+by_deck_and_class_percent = by_deck_and_class.div(by_deck_and_class.sum())
+```
+
+```
+Deck      A    B    C         D        E         F    G         M
+Pclass                                                           
+1       1.0  1.0  1.0  0.878788  0.78125  0.000000  0.0  0.059593
+2       0.0  0.0  0.0  0.121212  0.12500  0.615385  0.0  0.244186
+3       0.0  0.0  0.0  0.000000  0.09375  0.384615  1.0  0.696221
+```
+
+To get it into a format so that deck is along the X-axis, we have to transpose it:
+
+```python
+by_deck_and_class_percent_transposed = by_deck_and_class_percent.transpose()
+```
+
+```
+Pclass         1         2         3
+Deck                                
+A       1.000000  0.000000  0.000000
+B       1.000000  0.000000  0.000000
+C       1.000000  0.000000  0.000000
+D       0.878788  0.121212  0.000000
+E       0.781250  0.125000  0.093750
+F       0.000000  0.615385  0.384615
+G       0.000000  0.000000  1.000000
+M       0.059593  0.244186  0.696221
+```
+
+Then can plot a stacked % bar chart:
+
+```python
+by_deck_and_class_percent_transposed.plot(kind='bar', stacked=True, title="Passengers by Deck")
 ```
