@@ -872,3 +872,25 @@ by_deck_and_class_percent_transposed.plot(kind='bar', stacked=True, title="Passe
 ```
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stacked-bar-chart-percent.png)
+
+## Binning continuous variables
+
+```python
+df['Fare_Group_Bins'] = pd.qcut(df['Fare'], 13)
+df['Fare_Group_Integers'] = pd.qcut(df['Fare'], 13, labels=False)
+```
+
+```
+        Fare  Fare_Group_Bins  Fare_Group_Integers
+0     7.2500    (7.229, 7.75]                    1
+1    71.2833   (55.9, 83.158]                   11
+2     7.9250    (7.896, 8.05]                    3
+3    53.1000   (33.308, 55.9]                   10
+4     8.0500    (7.896, 8.05]                    3
+..       ...              ...                  ...
+886  13.0000     (10.5, 13.0]                    5
+887  30.0000  (26.55, 33.308]                    9
+888  23.4500    (15.85, 24.0]                    7
+889  30.0000  (26.55, 33.308]                    9
+890   7.7500    (7.229, 7.75]                    1
+```
