@@ -16,3 +16,9 @@ After starting the app, navigate to the subdirectory you want, then click New > 
 ```
 Ctrl+Enter
 ```
+
+## Exiting a script early
+
+```python
+exit(keep_kernel=True)
+```
