@@ -213,6 +213,8 @@ _.set_ylabel("Passengers")
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stacked-bar-chart.png?raw=true)
 
+With some data manipulation it's also possible to get a [stacked bar chart %](https://github.com/mattm/python-cheat-sheet/blob/master/data-frames.MD#calculating-percentages-for-a-stacked-bar-chart).
+
 ## Legend Position
 
 Placing the legend on the right of the chart itself:
