@@ -212,3 +212,11 @@ _.set_ylabel("Passengers")
 ```
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stacked-bar-chart.png?raw=true)
+
+## Legend Position
+
+Placing the legend on the right of the chart itself:
+
+```python
+_.legend(loc='upper left', bbox_to_anchor=(1, 1), prop={'size': 15})
+```
