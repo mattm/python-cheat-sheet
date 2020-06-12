@@ -690,3 +690,66 @@ Transformation on new data with unencoded values:
 
 ValueError: Found unknown categories [5] in column 0 during transform
 ```
+
+## OneHotEncoder vs pd.get_dummies
+
+```python
+import pandas as pd
+from sklearn.preprocessing import OneHotEncoder
+
+train = pd.read_csv("train.csv")
+train["Embarked"] = train["Embarked"].fillna("S")
+df = train[["Fare", "Sex", "Embarked"]]
+
+print("Original data frame:\n")
+print(df.head())
+
+# Converting categorical values using OneHotEncoder
+categorical_features = ["Sex", "Embarked"]
+encoded_features = []
+for feature in categorical_features:
+    ohe = OneHotEncoder(sparse=False)
+    encoded = ohe.fit_transform(df[feature].values.reshape(-1, 1))
+    cols = ['{}_{}'.format(feature, n) for n in range(1, df[feature].nunique() + 1)]
+    df_encoded = pd.DataFrame(encoded, columns=cols)
+    df_encoded.index = df.index
+    encoded_features.append(df_encoded)
+    
+df_ohe = pd.concat([df, *encoded_features], axis=1).drop(categorical_features, axis=1)
+print("\nEncoded with OneHotEncoder:\n")
+print(df_ohe.head())
+
+# vs using get_dummies
+print("\nEncoded with pd.get_dummies:\n")
+df_dummies = pd.get_dummies(df)
+print(df_dummies.head())
+```
+
+```
+Original data frame:
+
+      Fare     Sex Embarked
+0   7.2500    male        S
+1  71.2833  female        C
+2   7.9250  female        S
+3  53.1000  female        S
+4   8.0500    male        S
+
+Encoded with OneHotEncoder:
+
+      Fare  Sex_1  Sex_2  Embarked_1  Embarked_2  Embarked_3
+0   7.2500    0.0    1.0         0.0         0.0         1.0
+1  71.2833    1.0    0.0         1.0         0.0         0.0
+2   7.9250    1.0    0.0         0.0         0.0         1.0
+3  53.1000    1.0    0.0         0.0         0.0         1.0
+4   8.0500    0.0    1.0         0.0         0.0         1.0
+
+Encoded with pd.get_dummies:
+
+      Fare  Sex_female  Sex_male  Embarked_C  Embarked_Q  Embarked_S
+0   7.2500           0         1           0           0           1
+1  71.2833           1         0           1           0           0
+2   7.9250           1         0           0           0           1
+3  53.1000           1         0           0           0           1
+4   8.0500           0         1           0           0           1
+```
