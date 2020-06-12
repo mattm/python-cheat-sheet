@@ -76,6 +76,17 @@ data.mode()[0]
 'f'
 ```
 
+## Counting number of unique values
+
+```python
+data = pd.Series(["m", "f", "m", "f", "f"])
+data.nunique()
+```
+
+```
+2
+```
+
 ## Casting boolean to int
 
 ```python
