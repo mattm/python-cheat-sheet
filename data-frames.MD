@@ -894,3 +894,9 @@ df['Fare_Group_Integers'] = pd.qcut(df['Fare'], 13, labels=False)
 889  30.0000  (26.55, 33.308]                    9
 890   7.7500    (7.229, 7.75]                    1
 ```
+
+## Removing duplicate rows
+
+```python
+df = df.drop_duplicates()
+```
