@@ -230,3 +230,13 @@ Arguments are width and height:
 ```python
 plt.figure(figsize=(10, 6))
 ```
+
+## Formatting y-axis as a percent
+
+```python
+import matplotlib.ticker as mtick
+
+_.yaxis.set_major_formatter(mtick.PercentFormatter())
+```
+
+This will not convert numbers like 0.20 to 20%, so you need to multiply by 100 before using this.
