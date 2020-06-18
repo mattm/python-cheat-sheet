@@ -691,11 +691,13 @@ Transformation on new data with unencoded values:
 ValueError: Found unknown categories [5] in column 0 during transform
 ```
 
-## OneHotEncoder vs pd.get_dummies
+## OneHotEncoder vs pd.get_dummies vs ColumnTransformer vs make_column_transformer
 
 ```python
 import pandas as pd
 from sklearn.preprocessing import OneHotEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.compose import make_column_transformer
 
 train = pd.read_csv("train.csv")
 train["Embarked"] = train["Embarked"].fillna("S")
@@ -703,6 +705,9 @@ df = train[["Fare", "Sex", "Embarked"]]
 
 print("Original data frame:\n")
 print(df.head())
+
+print("Original data frame values:\n")
+print(df.values)
 
 # Converting categorical values using OneHotEncoder
 categorical_features = ["Sex", "Embarked"]
@@ -719,10 +724,33 @@ df_ohe = pd.concat([df, *encoded_features], axis=1).drop(categorical_features, a
 print("\nEncoded with OneHotEncoder:\n")
 print(df_ohe.head())
 
+print("\nEncoded with OneHotEncoder values:\n")
+print(df_ohe.values)
+
 # vs using get_dummies
 print("\nEncoded with pd.get_dummies:\n")
 df_dummies = pd.get_dummies(df)
 print(df_dummies.head())
+print("\nEncoded with pd.get_dummies values:\n")
+print(df_dummies.values)
+
+# vs Column Transformer
+ct = ColumnTransformer([
+    ("", "passthrough", ["Fare"]),
+    ("onehot", OneHotEncoder(sparse=False), ["Sex", "Embarked"])])
+values_transformed = ct.fit_transform(df)
+print("\nColumn Transformer values:\n")
+print(values_transformed)
+
+# vs make_column_transformer
+
+mct = make_column_transformer(
+    ("passthrough", ["Fare"]),
+    (OneHotEncoder(sparse=False), ["Sex", "Embarked"]))
+
+values_transformed = mct.fit_transform(df)
+print("\nmake_column_transformer values:\n")
+print(values_transformed)
 ```
 
 ```
@@ -734,6 +762,15 @@ Original data frame:
 2   7.9250  female        S
 3  53.1000  female        S
 4   8.0500    male        S
+Original data frame values:
+
+[[7.25 'male' 'S']
+ [71.2833 'female' 'C']
+ [7.925 'female' 'S']
+ ...
+ [23.45 'female' 'S']
+ [30.0 'male' 'C']
+ [7.75 'male' 'Q']]
 
 Encoded with OneHotEncoder:
 
@@ -744,6 +781,16 @@ Encoded with OneHotEncoder:
 3  53.1000    1.0    0.0         0.0         0.0         1.0
 4   8.0500    0.0    1.0         0.0         0.0         1.0
 
+Encoded with OneHotEncoder values:
+
+[[ 7.25    0.      1.      0.      0.      1.    ]
+ [71.2833  1.      0.      1.      0.      0.    ]
+ [ 7.925   1.      0.      0.      0.      1.    ]
+ ...
+ [23.45    1.      0.      0.      0.      1.    ]
+ [30.      0.      1.      1.      0.      0.    ]
+ [ 7.75    0.      1.      0.      1.      0.    ]]
+
 Encoded with pd.get_dummies:
 
       Fare  Sex_female  Sex_male  Embarked_C  Embarked_Q  Embarked_S
@@ -752,4 +799,34 @@ Encoded with pd.get_dummies:
 2   7.9250           1         0           0           0           1
 3  53.1000           1         0           0           0           1
 4   8.0500           0         1           0           0           1
-```
+
+Encoded with pd.get_dummies values:
+
+[[ 7.25    0.      1.      0.      0.      1.    ]
+ [71.2833  1.      0.      1.      0.      0.    ]
+ [ 7.925   1.      0.      0.      0.      1.    ]
+ ...
+ [23.45    1.      0.      0.      0.      1.    ]
+ [30.      0.      1.      1.      0.      0.    ]
+ [ 7.75    0.      1.      0.      1.      0.    ]]
+
+Column Transformer values:
+
+[[ 7.25    0.      1.      0.      0.      1.    ]
+ [71.2833  1.      0.      1.      0.      0.    ]
+ [ 7.925   1.      0.      0.      0.      1.    ]
+ ...
+ [23.45    1.      0.      0.      0.      1.    ]
+ [30.      0.      1.      1.      0.      0.    ]
+ [ 7.75    0.      1.      0.      1.      0.    ]]
+
+make_column_transformer values:
+
+[[ 7.25    0.      1.      0.      0.      1.    ]
+ [71.2833  1.      0.      1.      0.      0.    ]
+ [ 7.925   1.      0.      0.      0.      1.    ]
+ ...
+ [23.45    1.      0.      0.      0.      1.    ]
+ [30.      0.      1.      1.      0.      0.    ]
+ [ 7.75    0.      1.      0.      1.      0.    ]]
+ ```
