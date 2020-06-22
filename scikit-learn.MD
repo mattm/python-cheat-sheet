@@ -715,8 +715,7 @@ encoded_features = []
 for feature in categorical_features:
     ohe = OneHotEncoder(sparse=False)
     encoded = ohe.fit_transform(df[feature].values.reshape(-1, 1))
-    cols = ['{}_{}'.format(feature, n) for n in range(1, df[feature].nunique() + 1)]
-    df_encoded = pd.DataFrame(encoded, columns=cols)
+    df_encoded = pd.DataFrame(encoded, columns=ohe.get_feature_names([feature]))
     df_encoded.index = df.index
     encoded_features.append(df_encoded)
     
@@ -774,12 +773,12 @@ Original data frame values:
 
 Encoded with OneHotEncoder:
 
-      Fare  Sex_1  Sex_2  Embarked_1  Embarked_2  Embarked_3
-0   7.2500    0.0    1.0         0.0         0.0         1.0
-1  71.2833    1.0    0.0         1.0         0.0         0.0
-2   7.9250    1.0    0.0         0.0         0.0         1.0
-3  53.1000    1.0    0.0         0.0         0.0         1.0
-4   8.0500    0.0    1.0         0.0         0.0         1.0
+      Fare  Sex_female  Sex_male  Embarked_C  Embarked_Q  Embarked_S
+0   7.2500         0.0       1.0         0.0         0.0         1.0
+1  71.2833         1.0       0.0         1.0         0.0         0.0
+2   7.9250         1.0       0.0         0.0         0.0         1.0
+3  53.1000         1.0       0.0         0.0         0.0         1.0
+4   8.0500         0.0       1.0         0.0         0.0         1.0
 
 Encoded with OneHotEncoder values:
 
