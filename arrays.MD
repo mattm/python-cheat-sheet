@@ -142,3 +142,27 @@ np.vstack([a1, a2])
 ```
 ValueError: all the input array dimensions for the concatenation axis must match exactly, but along dimension 1, the array at index 0 has size 3 and the array at index 1 has size 4
 ```
+
+## Calculating the maximum values element-wise
+
+```python
+a1 = np.array([2, 5, 10])
+a2 = np.array([3, 4, 6])
+
+np.maximum(a1, a2)
+```
+
+```
+[ 3  5 10]
+```
+
+Can also supply a number for the second argument in which case it will be _broadcast_ to an array and compared element-wise:
+
+```python
+a = np.array([2, 5, 10])
+np.maximum(a1, 6)
+```
+
+```
+[ 6  6 10]
+```
