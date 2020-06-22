@@ -100,3 +100,45 @@ array([1. , 1.5 ])
 np.linspace(1, 2, num=3)
 array([1. , 1.5, 2. ])
 ```
+
+## Stacking
+
+Horizontal stacking:
+
+```python
+a1 = np.array(['a', 'b', 'c'])
+a2 = np.array(['d', 'e', 'f'])
+
+np.hstack([a1, a2])
+```
+
+```
+['a' 'b' 'c' 'd' 'e' 'f']
+```
+
+Vertical stacking:
+
+```python
+a1 = np.array(['a', 'b', 'c'])
+a2 = np.array(['d', 'e', 'f'])
+
+np.vstack([a1, a2])
+```
+
+```
+[['a' 'b' 'c']
+ ['d' 'e' 'f']]
+ ```
+ 
+When vertically stacking, each array needs to have the same number of items otherwise it will error:
+
+```python
+a1 = np.array(['a', 'b', 'c'])
+a2 = np.array(['d', 'e', 'f', 'g'])
+
+np.vstack([a1, a2])
+```
+
+```
+ValueError: all the input array dimensions for the concatenation axis must match exactly, but along dimension 1, the array at index 0 has size 3 and the array at index 1 has size 4
+```
