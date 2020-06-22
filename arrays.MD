@@ -166,3 +166,42 @@ np.maximum(a1, 6)
 ```
 [ 6  6 10]
 ```
+
+## Finding the positions of the largest values in an array
+
+```python
+a = np.array([[1, 2, 3], [4, 5, 6]])
+np.argmax(a)
+```
+
+Because 6 is the largest value and is in the 5th position of the flattened array:
+
+```
+5
+```
+
+We can also look at it row-wise:
+
+```python
+a = np.array([[1, 2, 3], [4, 5, 6]])
+np.argmax(a, axis=0)
+```
+
+Because 4 is greater than 1, 5 is greater than 2, and 6 is greater than 3:
+
+```
+[1 1 1]
+```
+
+Or column-wise:
+
+```python
+a = np.array([[1, 2, 3], [4, 5, 6]])
+np.argmax(a, axis=1)
+```
+
+Because 3 (in the 2nd position of the first array) is the largest value in [1, 2, 3] and because 6 (in the 2nd position of the second array) is the largest value in [4, 5, 6]):
+
+```
+[2 2]
+```
