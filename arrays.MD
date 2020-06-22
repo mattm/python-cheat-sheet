@@ -180,7 +180,7 @@ Because 6 is the largest value and is in the 5th position of the flattened array
 5
 ```
 
-We can also look at it row-wise:
+We can also look at it column-wise:
 
 ```python
 a = np.array([[1, 2, 3], [4, 5, 6]])
@@ -193,7 +193,7 @@ Because 4 is greater than 1, 5 is greater than 2, and 6 is greater than 3:
 [1 1 1]
 ```
 
-Or column-wise:
+Or row-wise:
 
 ```python
 a = np.array([[1, 2, 3], [4, 5, 6]])
