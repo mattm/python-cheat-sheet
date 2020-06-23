@@ -835,19 +835,30 @@ make_column_transformer values:
 ```python
 from sklearn.ensemble import VotingClassifier
 
-voting = VotingClassifier(estimators=[
-            ('xgb', xgb_grid),
-            ('rfc', rf_grid)
-            ('gbc', gbc_grid),
-            ('svc', svc_grid),
-            ('ext', ext_grid),
-            ('dt', dt_grid),
-            ('knn', knn_grid),
-            ('bag', bag_grid),
-            ('gaussian', gaussian),
-            ('gpc', gpc),
-            ('logreg', logreg_grid),
-            ('ada', ada_grid)
-        ], voting='soft', n_jobs=-1)
-voting.fit(X, y)
+lr = LogisticRegression(random_state=1)
+knn = KNN(n_neighbors=27)
+dt = DecisionTreeClassifier(min_samples_leaf=0.13, random_state=1)
+
+classifiers = [
+       ('Logistic Regression', lr),
+       ('K Nearest Neighbours', knn),
+       ('Classification Tree', dt)]
+
+for clf_name, clf in classifiers:    
+    clf.fit(X_train, y_train)    
+    y_pred = clf.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred) 
+    print('{:s} : {:.3f}'.format(clf_name, accuracy))
+
+from sklearn.ensemble import VotingClassifier
+
+vc = VotingClassifier(estimators=classifiers)     
+vc.fit(X_train, y_train)   
+y_pred = vc.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print('Voting Classifier: {:.3f}'.format(accuracy))
 ```
+
+* Individual classifiers must be fit before being passed to VotingClassifier
+* Default voting method is `hard` - the voting classifier chooses whichever prediction is the most common
+* Alternative is `soft` where instead of looking at 0/1 prediction, it uses the probabilities
