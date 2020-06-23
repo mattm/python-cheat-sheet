@@ -859,6 +859,25 @@ accuracy = accuracy_score(y_test, y_pred)
 print('Voting Classifier: {:.3f}'.format(accuracy))
 ```
 
+* Used when we want to combine multiple classifiers
 * Individual classifiers must be fit before being passed to VotingClassifier
 * Default voting method is `hard` - the voting classifier chooses whichever prediction is the most common
 * Alternative is `soft` where instead of looking at 0/1 prediction, it uses the probabilities
+
+## Bagging classifier
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import BaggingClassifier
+
+dt = DecisionTreeClassifier(random_state=1)
+bc = BaggingClassifier(base_estimator=dt, n_estimators=50, random_state=1)
+
+bc.fit(X_train, y_train)
+y_pred = bc.predict(X_test)
+acc_test = accuracy_score(y_test, y_pred)
+print('Test set accuracy of bc: {:.2f}'.format(acc_test)) 
+```
+
+* Used when we want to increase the accuracy of a single classifier
+* The bagging classifier chooses random samples from the training set with replacement
