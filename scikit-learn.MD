@@ -534,16 +534,32 @@ result_df.head(9)
 
 ## Random Forest Feature Importance
 
+Using a data frame:
+
 ```python
 importances = pd.DataFrame({
     "feature": X_train.columns,
-    "importance": np.round(random_forest.feature_importances_, 3)
+    "importance": random_forest.feature_importances_
 })
-importances = importances.sort_values("importance", ascending=False).set_index("feature")
-importances.head(15)
+importances_sorted = importances.sort_values("importance", ascending=False).set_index("feature")
 ```
 
-## Gridsearch with a pipeline
+Using a series:
+
+```python
+importances = pd.Series(data=rf.feature_importances_, index=X_train.columns)
+importances_sorted = importances.sort_values(ascending=False)
+```
+
+Can then create a horizontal bar chart:
+
+```python
+importances_sorted.plot(kind='barh')
+plt.title('Features Importances')
+plt.show()
+```
+
+## Grid Search with a pipeline
 
 ```python
 from sklearn.pipeline import make_pipeline
