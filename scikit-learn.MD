@@ -880,6 +880,7 @@ print('Test set accuracy of bc: {:.2f}'.format(acc_test))
 ```
 
 * Used when we want to increase the accuracy of a single classifier
+* Classifier/estimator can be any model
 * The bagging classifier chooses random samples from the training set with replacement
 * This means some instances may be sampled multiple times, others not at all
 * Instances that are _not_ sampled are called Out of Bag (OOB) instances
