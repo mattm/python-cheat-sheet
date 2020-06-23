@@ -881,3 +881,22 @@ print('Test set accuracy of bc: {:.2f}'.format(acc_test))
 
 * Used when we want to increase the accuracy of a single classifier
 * The bagging classifier chooses random samples from the training set with replacement
+* This means some instances may be sampled multiple times, others not at all
+* Instances that are _not_ sampled are called Out of Bag (OOB) instances
+* We can evaluate the performance of the model on the OOB instances, eliminating the need for cross-validation. This is known as OOB evaluation.
+
+Here's how to grab the OOB score:
+
+```python
+dt = DecisionTreeClassifier(random_state=1)
+bc = BaggingClassifier(base_estimator=dt, n_estimators=50, oob_score=True, random_state=1)
+
+bc.fit(X_train, y_train)
+y_pred = bc.predict(X_test)
+acc_test = accuracy_score(y_test, y_pred)
+acc_oob = bc.oob_score_
+print('Test set accuracy: {:.3f}, OOB accuracy: {:.3f}'.format(acc_test, acc_oob))
+```
+
+* Setting `oob_score=True` tells the classifier to use out-of-bag samples to estimate the generalization error.
+* After fitting we can then grab the OOB score via `oob_score_`
