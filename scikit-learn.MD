@@ -829,3 +829,25 @@ make_column_transformer values:
  [30.      0.      1.      1.      0.      0.    ]
  [ 7.75    0.      1.      0.      1.      0.    ]]
  ```
+
+## Voting classifier
+
+```python
+from sklearn.ensemble import VotingClassifier
+
+voting = VotingClassifier(estimators=[
+            ('xgb', xgb_grid),
+            ('rfc', rf_grid)
+            ('gbc', gbc_grid),
+            ('svc', svc_grid),
+            ('ext', ext_grid),
+            ('dt', dt_grid),
+            ('knn', knn_grid),
+            ('bag', bag_grid),
+            ('gaussian', gaussian),
+            ('gpc', gpc),
+            ('logreg', logreg_grid),
+            ('ada', ada_grid)
+        ], voting='soft', n_jobs=-1)
+voting.fit(X, y)
+```
