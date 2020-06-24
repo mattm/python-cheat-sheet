@@ -917,3 +917,54 @@ print('Test set accuracy: {:.3f}, OOB accuracy: {:.3f}'.format(acc_test, acc_oob
 
 * Setting `oob_score=True` tells the classifier to use out-of-bag samples to estimate the generalization error.
 * After fitting we can then grab the OOB score via `oob_score_`
+
+## Adaboost
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.metrics import roc_auc_score
+
+dt = DecisionTreeClassifier(max_depth=2, random_state=1)
+ada = AdaBoostClassifier(base_estimator=dt, n_estimators=180, random_state=1)
+ada.fit(X_train, y_train)
+
+y_pred_proba = ada.predict_proba(X_test)[:, 1]
+ada_roc_auc = roc_auc_score(y_test, y_pred_proba)
+
+print('ROC AUC score: {:.2f}'.format(ada_roc_auc))
+```
+
+* See [why use decision trees with Adaboosting](https://stats.stackexchange.com/questions/124628/why-adaboost-with-decision-trees)
+
+## Gradient Boosting
+
+```python
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.metrics import mean_squared_error
+
+gb = GradientBoostingRegressor(max_depth=4, n_estimators=200, random_state=2)
+gb.fit(X_train, y_train)
+
+y_pred = gb.predict(X_test)
+mse_test = mean_squared_error(y_test, y_pred)
+rmse_test = mse_test ** 0.5
+
+print('Test set RMSE of gb: {:.3f}'.format(rmse_test))
+```
+
+Stochastic Gradient Boosting
+
+```python
+from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.metrics import mean_squared_error as MSE
+
+sgbr = GradientBoostingRegressor(max_depth=4, subsample=0.9, max_features=0.75, n_estimators=200, random_state=2)
+sgbr.fit(X_train, y_train)
+
+y_pred = sgbr.predict(X_test)
+mse_test = MSE(y_test, y_pred)
+rmse_test = mse_test ** 0.5
+
+print('Test set RMSE of sgbr: {:.3f}'.format(rmse_test))
+```
