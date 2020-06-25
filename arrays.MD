@@ -205,3 +205,13 @@ Because 3 (in the 2nd position of the first array) is the largest value in [1, 2
 ```
 [2 2]
 ```
+
+## Finding array values that contain a string
+
+via [StackOverflow](https://stackoverflow.com/a/38974252/156835):
+
+```python
+arr = np.array(['company_id', 'days_after_sign_up', 'user_count'])
+
+arr[np.flatnonzero(np.core.defchararray.find(arr, "_count") != -1)]
+```
