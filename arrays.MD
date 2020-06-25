@@ -215,3 +215,9 @@ arr = np.array(['company_id', 'days_after_sign_up', 'user_count'])
 
 arr[np.flatnonzero(np.core.defchararray.find(arr, "_count") != -1)]
 ```
+
+Or:
+
+```python
+[column for column in columns if "_count" in column]
+```
