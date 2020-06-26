@@ -80,6 +80,12 @@ is_work_sign_up_email                     bool
 
 ```python
 df_bools = df.select_dtypes(include=['bool'])
+df_bools.columns
+```
+
+```
+Index(['is_weekend_sign_up', 'is_work_sign_up_email', 'is_united_states'],
+      dtype='object')
 ```
 
 ## Viewing statistics about numeric columns
