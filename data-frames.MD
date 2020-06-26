@@ -63,6 +63,19 @@ dtypes: int64(2), object(1)
 memory usage: 176.0+ bytes
 ```
 
+Can also just view the types:
+
+```python
+df.dtypes
+```
+
+```
+company_id                               int64
+is_weekend_sign_up                        bool
+has_closed                                bool
+is_work_sign_up_email                     bool
+```
+
 ## Viewing statistics about numeric columns
 
 ```python
