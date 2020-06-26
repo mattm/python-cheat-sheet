@@ -103,8 +103,6 @@ data.astype(int)
 ## Replacing uncommon values with "Other"
 
 ```python
-import pandas as pd
-
 series = pd.Series(["US", "India", "US", "Australia", "US", "India", "Canada"])
 
 print("Original:")
@@ -167,4 +165,18 @@ Final Series:
 5    India
 6    Other
 dtype: object
+```
+
+## Replacing charcters
+
+```python
+series = pd.Series(["10000", "12,000"])
+series = series.str.replace(",", "").astype(float)
+series
+```
+
+```
+0    10000.0
+1    12000.0
+dtype: float64
 ```
