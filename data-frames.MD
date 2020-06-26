@@ -342,6 +342,9 @@ X['Age'].fillna(np.mean(X['Age']), inplace=True)
 # One column:
 df = df.drop('revenue', axis=1)
 
+# or
+df = df.drop(columns=['revenue']) 
+
 # or 
 df.drop('revenue', axis=1, inplace=True)
 
