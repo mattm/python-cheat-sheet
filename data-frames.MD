@@ -76,6 +76,12 @@ has_closed                                bool
 is_work_sign_up_email                     bool
 ```
 
+## Grabbing columns of a specific type
+
+```python
+df_bools = df.select_dtypes(include=['bool'])
+```
+
 ## Viewing statistics about numeric columns
 
 ```python
