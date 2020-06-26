@@ -99,3 +99,72 @@ data.astype(int)
 1    0
 2    1
 ```
+
+## Replacing uncommon values with "Other"
+
+```python
+import pandas as pd
+
+series = pd.Series(["US", "India", "US", "Australia", "US", "India", "Canada"])
+
+print("Original:")
+print(series)
+
+counts = series.value_counts()
+print("\nCounts:")
+print(counts)
+
+indeces = counts[counts < 2].index
+print("\nIndeces:")
+print(indeces)
+
+mask = series.isin(indeces)
+print("\nMask:")
+print(mask)
+
+series[mask] = "Other"
+print("\nFinal Series:")
+series
+```
+
+```
+Original:
+0           US
+1        India
+2           US
+3    Australia
+4           US
+5        India
+6       Canada
+dtype: object
+
+Counts:
+US           3
+India        2
+Australia    1
+Canada       1
+dtype: int64
+
+Indeces:
+Index(['Australia', 'Canada'], dtype='object')
+
+Mask:
+0    False
+1    False
+2    False
+3     True
+4    False
+5    False
+6     True
+dtype: bool
+
+Final Series:
+0       US
+1    India
+2       US
+3    Other
+4       US
+5    India
+6    Other
+dtype: object
+```
