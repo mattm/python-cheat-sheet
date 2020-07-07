@@ -3,13 +3,18 @@
 # KMeans Clustering
 
 ```python
+import pandas as pd
+import numpy as np
 from sklearn.cluster import KMeans
 
-model = KMeans(n_clusters=3)
-model.fit(points)
+df = pd.DataFrame(np.random.randint(0, 100, size=1000).reshape(-1, 2), columns=["x", "y"])
 
-labels = model.predict(new_points)
-print(labels)
+model = KMeans(n_clusters=10)
+model.fit(df)
+
+labels = model.predict(df)
+plt.scatter(df["x"], df["y"], c=labels)
+plt.show()
 ```
 
 Creating a scatter plot with the cluster centers visualized:
