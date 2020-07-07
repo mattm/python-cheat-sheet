@@ -215,6 +215,20 @@ _.set_ylabel("Passengers")
 
 With some data manipulation it's also possible to get a [stacked bar chart %](https://github.com/mattm/python-cheat-sheet/blob/master/data-frames.MD#calculating-percentages-for-a-stacked-bar-chart).
 
+## Scatter Plot
+
+```python
+import matplotlib.pyplot as plt
+from matplotlib.colors import ListedColormap
+
+colors = ListedColormap(['gray', 'cyan'])
+scatter = plt.scatter(samples["total_emails_received_count"], samples["total_ticket_response_count"], c=samples["has_closed"], cmap=colors, alpha=0.4)
+plt.legend(handles=scatter.legend_elements()[0], labels=["Never Closed", "Closed"], loc="upper left", bbox_to_anchor=(1, 1))
+plt.xlabel("Emails Received")
+plt.ylabel("Ticket Responses")
+plt.show()
+```
+
 ## Legend Position
 
 Placing the legend on the right of the chart itself:
