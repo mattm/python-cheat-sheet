@@ -17,6 +17,8 @@ plt.scatter(df["x"], df["y"], c=labels)
 plt.show()
 ```
 
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/kmeans.png?raw=true)
+
 Creating a scatter plot with the cluster centers visualized:
 
 ```python
