@@ -180,3 +180,19 @@ series
 1    12000.0
 dtype: float64
 ```
+
+# Determining the largest values
+
+```python
+s = pd.Series([5, 10, 3, 20, 100, 48, 3, 2, 1000])
+s.nlargest()
+```
+
+```
+8    1000
+4     100
+5      48
+3      20
+1      10
+dtype: int64
+```
