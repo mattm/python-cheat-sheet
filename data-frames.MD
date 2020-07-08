@@ -928,3 +928,31 @@ df['Fare_Group_Integers'] = pd.qcut(df['Fare'], 13, labels=False)
 ```python
 df = df.drop_duplicates()
 ```
+
+## Computing cross tabulation
+
+```python
+df = pd.DataFrame({
+    'country': ['US', 'China', 'US', 'US'],
+    'language': ['English', 'Chinese', 'Chinese', 'English']
+})
+
+pd.crosstab(df['country'], df['language'])
+```
+
+```
+  country language
+0      US  English
+1   China  Chinese
+2      US  Chinese
+3      US  English
+```
+
+First argument to `crosstab` becomes the index of the result, second argument the columns. Values are the number of entries at their intersection.
+
+```
+language  Chinese  English
+country                   
+China           1        0
+US              1        2
+```
