@@ -28,6 +28,25 @@ np.random.rand(size = 10)
 np.random.randint(0, 11, size=100)
 ```
 
+## Generate a 2d array of random integers
+
+```python
+np.random.randint(1, 100, size=(10, 2)
+```
+
+```
+array([[18, 91],
+       [82, 75],
+       [93, 48],
+       [50, 66],
+       [67, 54],
+       [78, 90],
+       [70,  1],
+       [63, 24],
+       [10, 90],
+       [ 5, 51]])
+```
+
 ## Generate random numbers from a normal distribution
 
 ```python
