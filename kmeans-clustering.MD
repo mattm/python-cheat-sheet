@@ -67,3 +67,19 @@ centroids_y = centroids[:,1]
 plt.scatter(centroids_x, centroids_y, marker='D', s=50)
 plt.show()
 ```
+
+## Using in a pipeline
+
+```python
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.pipeline import make_pipeline
+
+X = df[["x", "y"]]
+
+scaler = StandardScaler()
+kmeans = KMeans(n_clusters=8, random_state=1)
+pipe = make_pipeline(scaler, kmeans)
+
+labels = pipe.fit_predict(X)
+```
