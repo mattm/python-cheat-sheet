@@ -9,10 +9,9 @@ from sklearn.cluster import KMeans
 
 df = pd.DataFrame(np.random.randint(0, 100, size=1000).reshape(-1, 2), columns=["x", "y"])
 
-model = KMeans(n_clusters=10)
-model.fit(df)
+model = KMeans(n_clusters=10, random_state=1)
+labels = model.fit_predict(df)
 
-labels = model.predict(df)
 plt.scatter(df["x"], df["y"], c=labels)
 plt.show()
 ```
