@@ -28,6 +28,8 @@ model.inertia_
 
 ## Determining the optimal number of clusters
 
+Experiment with varying number of clusters and chart them:
+
 ```python
 inertias = []
 for n in range(1, 10):
@@ -43,6 +45,10 @@ plt.xlabel("number of clusters, k")
 plt.ylabel("inertia")
 plt.show()
 ```
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/kmeans-inertia.png?raw=true)
+
+We can then pick a number of clusters where there's not much drop off past it like 3 in the example above.
 
 ## Creating a scatter plot with the cluster centers visualized:
 
