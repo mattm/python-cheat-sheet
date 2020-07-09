@@ -395,6 +395,10 @@ df = df.dropna()
 # 0   1234.0     68
 ```
 
+`dropna` defaults to rows (`axis=0`), but we can drop columns by specifying `axis=1`. 
+
+`dropna` also contains a `thresh` argument that lets you say only drop rows/cols with at least that many NA values.
+
 ## Merging two data frames
 
 ```python
