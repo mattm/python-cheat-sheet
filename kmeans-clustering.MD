@@ -26,6 +26,24 @@ The intertia measures how spread out the clusters are (lower is better). k-means
 model.inertia_
 ```
 
+## Determining the optimal number of clusters
+
+```python
+inertias = []
+for n in range(1, 10):
+    model = KMeans(n_clusters=n, random_state=1)
+    model.fit(X)
+    inertias.append(model.inertia_)
+
+fig, ax = plt.subplots()
+ax.plot(range(1, len(inertias) + 1), inertias, marker='o')
+ax.ticklabel_format(useOffset=False, style='plain', axis='y')
+ax.set_ylim(ymin=0)
+plt.xlabel("number of clusters, k")
+plt.ylabel("inertia")
+plt.show()
+```
+
 ## Creating a scatter plot with the cluster centers visualized:
 
 ```python
