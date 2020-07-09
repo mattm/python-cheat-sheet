@@ -1,6 +1,8 @@
-# Unsupervised Learning
-
 # KMeans Clustering
+
+## The Basics
+
+The `n_clusters` hyperparameter is adjustable depending on how many clusters you want.
 
 ```python
 from sklearn.cluster import KMeans
@@ -16,7 +18,15 @@ plt.show()
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/kmeans.png?raw=true)
 
-Creating a scatter plot with the cluster centers visualized:
+## Measuring the inertia
+
+The intertia measures how spread out the clusters are (lower is better). k-means attempts to minimize inertia when determining the clusters.
+
+```python
+model.inertia_
+```
+
+## Creating a scatter plot with the cluster centers visualized:
 
 ```python
 import matplotlib.pyplot as plt
