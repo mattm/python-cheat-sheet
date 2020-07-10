@@ -15,7 +15,9 @@ print(df)
 print("\nColumn means:\n")
 print(df.mean())
 print("\nOriginal variance:\n")
-print(df.var())
+print(df.var(ddof=0))
+print("\nOriginal standard deviations:\n")
+print(df.std(ddof=0))
 
 scaler = StandardScaler()
 df1 = pd.DataFrame(scaler.fit_transform(df), columns=df.columns)
@@ -25,7 +27,15 @@ print("\nColumn means:\n")
 print(round(df1.mean(), 3))
 print("\nVariance:\n")
 print(df1.var())
+print("\nStandard deviations:\n")
+print(df1.std())
+
+print("\nExample calculation for col2:")
+print("z = (x - mean) / std")
+print("z = (10 - 20) / 8.164966 = -1.224745")
 ```
+
+Note that `DataFrame.var` and `DataFrame.std` default to using 1 degree of freedom (`ddof=1`) but StandardScaler is using `numpy`'s versions which default to `ddof=0`. That's why when printing the variance and standard deviation of the original data frame, we're specifying `ddof=0`. `ddof=1` is known as [Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction).
 
 ```
 Original:
@@ -44,9 +54,16 @@ dtype: float64
 
 Original variance:
 
-col1      1.0
-col2    100.0
-col3    148.0
+col1     0.666667
+col2    66.666667
+col3    98.666667
+dtype: float64
+
+Original standard deviations:
+
+col1    0.816497
+col2    8.164966
+col3    9.933110
 dtype: float64
 
 After scaling:
@@ -69,6 +86,17 @@ col1    1.5
 col2    1.5
 col3    1.5
 dtype: float64
+
+Standard deviations:
+
+col1    1.224745
+col2    1.224745
+col3    1.224745
+dtype: float64
+
+Example calculation for col2:
+z = (x - mean) / std
+z = (10 - 20) / 8.164966 = -1.224745
 ```
 
 ## Log
