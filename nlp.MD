@@ -29,3 +29,32 @@ def return_weights(vocab, original_vocab, vector, vector_index, top_n):
 
 print(return_weights(vocab, tfidf_vec.vocabulary_, text_tfidf, 8, 3))
 ```
+
+```python
+def words_to_filter(vocab, original_vocab, vector, top_n):
+    filter_list = []
+    for i in range(0, vector.shape[0]):
+    
+        # Here we'll call the function from the previous exercise, and extend the list we're creating
+        filtered = return_weights(vocab, original_vocab, vector, i, top_n)
+        filter_list.extend(filtered)
+    # Return the list in a set, so we don't get duplicate word indices
+    return set(filter_list)
+
+# Call the function to get the list of word indices
+filtered_words = words_to_filter(vocab, tfidf_vec.vocabulary_, text_tfidf, 3)
+
+# By converting filtered_words back to a list, we can use it to filter the columns in the text vector
+filtered_text = text_tfidf[:, list(filtered_words)]
+```
+
+```
+# Split the dataset according to the class distribution of category_desc, using the filtered_text vector
+train_X, test_X, train_y, test_y = train_test_split(filtered_text.toarray(), y, stratify=y)
+
+# Fit the model to the training data
+nb.fit(train_X, train_y)
+
+# Print out the model's accuracy
+print(nb.score(test_X, test_y))
+```
