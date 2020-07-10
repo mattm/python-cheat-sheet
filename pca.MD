@@ -70,7 +70,10 @@ Explained Variance:
 [1.52829263e+03 5.96477476e+01 8.05885979e-01]
 ```
 
-Notice how most of the variance is explained by the first (high variance) feature.
+* Notice how most of the variance is explained by the first (high variance) feature.
+* By default PCA uses the same number of components as features, but can be reduced by setting `n_components`
+* Explained Variance Ratio: Percentage of variance explained by each of the selected components (adds up to 1)
+* Explained Variance: The amount of variance explained by each of the selected components.
 
 ## Charting the variance
 
