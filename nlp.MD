@@ -16,7 +16,7 @@ score = nb.score(X_test, y_test)
 
 via [DataCamp](https://campus.datacamp.com/courses/preprocessing-for-machine-learning-in-python/selecting-features-for-modeling):
 
-```
+```python
 def return_weights(vocab, original_vocab, vector, vector_index, top_n):
     zipped = dict(zip(vector[vector_index].indices, vector[vector_index].data))
     
