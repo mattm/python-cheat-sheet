@@ -966,3 +966,21 @@ country
 China           1        0
 US              1        2
 ```
+
+## Applying a function on multiple column values
+
+```python
+df = pd.DataFrame({
+    'name': ['Ava', 'Mason'],
+    'test1': [100, 98],
+    'test2': [90, 90]
+})
+
+df['test_average'] = df.apply(lambda row: row[['test1', 'test2']].mean(), axis=1)
+```
+
+```
+    name  test1  test2  test_average
+0    Ava    100     90          95.0
+1  Mason     98     90          94.0
+```
