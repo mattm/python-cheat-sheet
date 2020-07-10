@@ -48,7 +48,7 @@ filtered_words = words_to_filter(vocab, tfidf_vec.vocabulary_, text_tfidf, 3)
 filtered_text = text_tfidf[:, list(filtered_words)]
 ```
 
-```
+```python
 # Split the dataset according to the class distribution of category_desc, using the filtered_text vector
 train_X, test_X, train_y, test_y = train_test_split(filtered_text.toarray(), y, stratify=y)
 
