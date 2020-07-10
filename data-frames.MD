@@ -88,6 +88,12 @@ Index(['is_weekend_sign_up', 'is_work_sign_up_email', 'is_united_states'],
       dtype='object')
 ```
 
+## Converting a column from one type to another
+
+```python
+volunteer["hits"] = volunteer["hits"].astype('int')
+```
+
 ## Viewing statistics about numeric columns
 
 ```python
