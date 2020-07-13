@@ -1,18 +1,69 @@
-# Natural Language Processing
-
-## Term Frequency Inverse Document Frequency (tf-idf)
+# Term Frequency Inverse Document Frequency (tf-idf)
 
 * Rescale features by how informative we expect them to be
 * Give weight to any term that appears often in a particular document, but not in many documents
 * `TfidfVectorizer` takes the text data and does both the bag-of-words feature extraction and tf-idf transformation
 
+## Getting Started
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-title_text = volunteer['title']
-tfidf_vec = TfidfVectorizer()
-text_tfidf = tfidf_vec.fit_transform(title_text)
+df = pd.DataFrame({
+    "words": ["Sola runs", "Sola is a dog", "Sola chews toys"]
+})
+
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(df["words"])
+```
+
+`X` here is a sparse matrix with one row per document and one column per unique word in the corpus (all the words in all the documents).
+
+```python
+X.todense()
+```
+
+```
+[[0.         0.         0.         0.861037   0.50854232 0.        ]
+ [0.         0.65249088 0.65249088 0.         0.38537163 0.        ]
+ [0.65249088 0.         0.         0.         0.38537163 0.65249088]]
+```
+
+We can see which columns represent which words:
+
+```python
+vectorizer.get_feature_names()
+```
+
+```
+['chews', 'dog', 'is', 'runs', 'sola', 'toys']
+```
+
+We can see, for example, that the first row (representing "Sola runs") has values in the "runs" and "Sola" columns.
+
+## Accessing the vocabulary
+
+> The attribute `vocabulary_` outputs a dictionary in which all ngrams are the dictionary keys and the respective values are the column positions of each ngram (feature) in the tfidf matrix. [#](https://stackoverflow.com/a/54338182/156835)
+
+```python
+vectorizer.vocabulary_
+```
+
+```
+{'real': 5144, 'property': 4991, 'management': 3830, ... }
+```
+
+We can swap the keys and values to map the column number to the word:
+
+```python
+vocab = {v:k for k, v in vectorizer.vocabulary_.items()}
+```
+
+```
+{5144: 'real', 4991: 'property', 3830: 'management', 3990, ... }
+```
+
+## Fitting a model
 
 y = volunteer["category_desc"]
 X_train, X_test, y_train, y_test = train_test_split(text_tfidf.toarray(), y, stratify=y)
