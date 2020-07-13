@@ -3,6 +3,8 @@
 ## Tfidf
 
 ```python
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 title_text = volunteer['title']
 tfidf_vec = TfidfVectorizer()
 text_tfidf = tfidf_vec.fit_transform(title_text)
