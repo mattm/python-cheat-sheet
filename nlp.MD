@@ -1,6 +1,11 @@
 # Natural Language Processing
 
-## Tfidf
+## Term Frequency Inverse Document Frequency (tf-idf)
+
+* Rescale features by how informative we expect them to be
+* Give weight to any term that appears often in a particular document, but not in many documents
+* `TfidfVectorizer` takes the text data and does both the bag-of-words feature extraction and tf-idf transformation
+
 
 ```python
 from sklearn.feature_extraction.text import TfidfVectorizer
