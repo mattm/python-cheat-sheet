@@ -11,66 +11,73 @@ import numpy as np
 from sklearn.decomposition import PCA
 
 df = pd.DataFrame({
+    'low_variance': np.random.normal(100, 1, 10),
     'high_variance': np.random.normal(100, 50, 10),
-    'medium_variance': np.random.normal(100, 10, 10),
-    'low_variance': np.random.normal(100, 1, 10)
+    'medium_variance': np.random.normal(100, 10, 10)
 })
 
 print("Original:\n")
 print(df)
 
 pca = PCA()
-df_pca = pd.DataFrame(pca.fit_transform(df), columns=df.columns)
+arr = pca.fit_transform(df)
 
 print("\nAfter PCA:\n")
-print(df_pca)
+print(arr)
 
 print("\nExplained Variance Ratio:\n")
 print(pca.explained_variance_ratio_)
 
 print("\nExplained Variance:\n")
 print(pca.explained_variance_)
+
+features = range(pca.n_components_)
+plt.bar(features, pca.explained_variance_)
+plt.xlabel('PCA feature')
+plt.ylabel('variance')
+plt.xticks(features)
+plt.show()
 ```
 
 ```
 Original:
 
-   high_variance  medium_variance  low_variance
-0     104.316362       100.749514     98.746562
-1      44.939206        99.050535    101.147283
-2      34.051548        86.710008     99.336062
-3     151.321535       106.303130    101.127509
-4      84.528101        92.965752     99.456895
-5      44.720013       105.127476     98.644154
-6     120.100353       105.418759     99.873366
-7      41.465990       101.811094    100.550672
-8      58.143133       116.483944    100.826879
-9      78.490745        99.676329    100.736497
+   low_variance  high_variance  medium_variance
+0     98.853326      74.973886        90.331814
+1     99.218176      80.554743       110.264567
+2    100.336048      88.807404       106.167272
+3     99.941872     206.608862       103.196729
+4    101.175028     116.555090       124.883467
+5     98.555317      45.198237       118.807557
+6    100.243787     180.985931       100.396761
+7     99.904926     130.968479        91.238566
+8     99.829526      58.465493       106.435892
+9     97.265555     190.332202       111.082900
 
 After PCA:
 
-   high_variance  medium_variance  low_variance
-0      28.021939        -2.311500      1.293196
-1     -31.349135        -0.570662     -1.225076
-2     -42.918075       -12.342788      0.073733
-3      75.271997         0.682473     -0.820066
-4       7.830210        -8.935174      0.250210
-5     -31.234649         5.402512      1.522833
-6      44.046632         1.504759      0.370552
-7     -34.663741         2.354348     -0.519690
-8     -17.188343        16.065453     -0.185021
-9       2.183165        -1.849420     -0.760671
+[[-41.85855336 -17.25228019   0.5981049 ]
+ [-36.8956139    2.84491171   0.34150271]
+ [-28.52079541  -0.98956602  -0.80001367]
+ [ 89.31634592  -0.32519344  -0.43979183]
+ [ -1.3641927   18.57837332  -1.54072497]
+ [-72.49871119  10.28890281   1.05641304]
+ [ 63.79193465  -3.91291627  -0.75317685]
+ [ 14.08104691 -14.61211066  -0.45692694]
+ [-58.85638037  -1.66026391  -0.2874725 ]
+ [ 72.80491947   7.04014265   2.28208612]]
 
 Explained Variance Ratio:
 
-[9.61948843e-01 3.75439107e-02 5.07246500e-04]
+[9.66398855e-01 3.32534266e-02 3.47718766e-04]
 
 Explained Variance:
 
-[1.52829263e+03 5.96477476e+01 8.05885979e-01]
+[3.35494567e+03 1.15442438e+02 1.20713881e+00]
 ```
 
-* Notice how most of the variance is explained by the first (high variance) feature.
+* Notice how most of the variance is explained by one feature (the high variance one).
+* The order of `explained_variance_` and `explained_variance_ratio_` _do not_ necessarilly line up with the order of the features in the original data frame
 * By default PCA uses the same number of components as features, but can be reduced by setting `n_components`
 * Explained Variance Ratio: Percentage of variance explained by each of the selected components (adds up to 1)
 * Explained Variance: The amount of variance explained by each of the selected components.
