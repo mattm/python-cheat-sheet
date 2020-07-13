@@ -77,7 +77,7 @@ Explained Variance:
 ```
 
 * Notice how most of the variance is explained by one feature (the high variance one).
-* The order of `explained_variance_` and `explained_variance_ratio_` _do not_ necessarilly line up with the order of the features in the original data frame
+* The order of `explained_variance_` and `explained_variance_ratio_` _do not_ necessarilly line up with the order of the features in the original data frame. They're ordered by the variance of the original features.
 * By default PCA uses the same number of components as features, but can be reduced by setting `n_components`
 * Explained Variance Ratio: Percentage of variance explained by each of the selected components (adds up to 1)
 * Explained Variance: The amount of variance explained by each of the selected components.
