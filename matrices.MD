@@ -1,6 +1,8 @@
 # Matrices
 
-## Creating a csr matrix
+## Creating a CSR matrix
+
+* Compressed Sparse Row (CSR) matrix
 
 ```python
 from scipy.sparse import csr_matrix
