@@ -27,7 +27,7 @@ Getting first 2 elements:
 
 ```python
 arr[:2]
-``
+```
 
 ```
 [5, 10]
