@@ -21,6 +21,40 @@ print(matrix.toarray())
  [4 5 6]]
 ```
 
+## Interpreting a printed sparse matrix
+
+```python
+print(matrix)
+```
+
+```
+  (0, 0)	1
+  (0, 2)	2
+  (1, 2)	3
+  (2, 0)	4
+  (2, 1)	5
+  (2, 2)	6
+```
+
+This means (remembering that this is zero-indexed):
+
+* The element in row 0, column 1 is a 1. 
+* The element in row 0, column 2 is a 2. 
+* The element in row 1, column 2 is a 3.
+* And so on
+
+## Printing as a dense matrix
+
+```python
+matrix.todense()
+```
+
+```
+matrix([[1, 0, 2],
+        [0, 0, 3],
+        [4, 5, 6]], dtype=int64)
+```
+
 ## Returning the max values in the rows or columns
 
 `axis=0` will return max values in each column:
