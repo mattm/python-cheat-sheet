@@ -206,6 +206,19 @@ Because 3 (in the 2nd position of the first array) is the largest value in [1, 2
 [2 2]
 ```
 
+## Returning the indeces that would sort an array
+
+```python
+arr = np.array([3, 10, 2])
+arr.argsort()
+```
+
+```
+[2, 0, 1]
+```
+
+Because the smallest value is position 2, then the next smallest is in position 0, then the next smallest is in position 1.
+
 ## Finding array values that contain a string
 
 via [StackOverflow](https://stackoverflow.com/a/38974252/156835):
