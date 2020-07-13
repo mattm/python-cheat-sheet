@@ -7,6 +7,42 @@
 array([ 5, 10, 15])
 ```
 
+## Slicing an array
+
+```python
+arr = np.array([5, 10, 15, 20, 25, 30, 35, 40])
+```
+
+Getting elements 2 and 3:
+
+```python
+arr[2:4]
+```
+
+```
+[15, 20]
+```
+
+Getting first 2 elements:
+
+```python
+arr[:2]
+``
+
+```
+[5, 10]
+```
+
+Getting last 2 elements:
+
+```python
+arr[-2:]
+```
+
+```
+[35, 40]
+```
+
 ## Subsetting an array
 
 ```python
