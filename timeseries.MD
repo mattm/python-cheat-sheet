@@ -22,7 +22,7 @@ Method 2:
 ```python
 fig, ax = plt.subplots()
 df.plot(ax=ax)
-ax.set(title="Sign Ups by Month", ylabel="New Trials", xlabel="Sign Up Month")
+ax.set(title="Sign Ups by Month", xlabel="Sign Up Month", ylabel="New Trials")
 ax.get_legend().remove()
 plt.show()
 ```
