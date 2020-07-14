@@ -26,3 +26,23 @@ ax.set(title="Sign Ups by Month", xlabel="Sign Up Month", ylabel="New Trials")
 ax.get_legend().remove()
 plt.show()
 ```
+
+## Subsetting when the index is a datetime
+
+```python
+df = pd.DataFrame({
+    'stock_price': ['2018-01-01', '2019-01-01', '2020-01-01'],
+    'value': [10, 25, 50]
+})
+df = df.set_index('stock_price')
+df.index = pd.to_datetime(df.index)
+
+# Subset the data frame to only include rows where the index reflects the year 2019
+df['2019']
+```
+
+```
+             value
+stock_price       
+2019-01-01      25
+```
