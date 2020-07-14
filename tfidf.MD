@@ -41,6 +41,19 @@ vectorizer.get_feature_names()
 
 We can see, for example, that the first row (representing "Sola runs") has values in the "runs" and "Sola" columns.
 
+Together these let us construct a data frame if we want:
+
+```python
+pd.DataFrame(X.todense(), columns=vectorizer.get_feature_names())
+```
+
+```
+      chews       dog        is      runs      sola      toys
+0  0.000000  0.000000  0.000000  0.861037  0.508542  0.000000
+1  0.000000  0.652491  0.652491  0.000000  0.385372  0.000000
+2  0.652491  0.000000  0.000000  0.000000  0.385372  0.652491
+```
+
 ## Accessing the vocabulary
 
 > The attribute `vocabulary_` outputs a dictionary in which all ngrams are the dictionary keys and the respective values are the column positions of each ngram (feature) in the tfidf matrix. [#](https://stackoverflow.com/a/54338182/156835)
@@ -50,7 +63,7 @@ vectorizer.vocabulary_
 ```
 
 ```
-{'real': 5144, 'property': 4991, 'management': 3830, ... }
+{'sola': 4, 'runs': 3, 'is': 2, 'dog': 1, 'chews': 0, 'toys': 5}
 ```
 
 We can swap the keys and values to map the column number to the word:
@@ -60,7 +73,37 @@ vocab = {v:k for k, v in vectorizer.vocabulary_.items()}
 ```
 
 ```
-{5144: 'real', 4991: 'property', 3830: 'management', 3990, ... }
+{4: 'sola', 3: 'runs', 2: 'is', 1: 'dog', 0: 'chews', 5: 'toys'}
+```
+
+## Accessing document data
+
+For any given document, we can access the word indices and tf-idt weights:
+
+```python
+X[0].indeces
+```
+
+```
+[3, 4]
+```
+
+```python
+X[0].data
+```
+
+```
+[0.861037, 0.50854232]
+```
+
+We can `zip` these together and convert them into a `dict`:
+
+```python
+dict(zip(X[0].indices, X[0].data))
+```
+
+```
+{3: 0.8610369959439764, 4: 0.5085423203783267}
 ```
 
 ## Fitting a model
@@ -73,6 +116,8 @@ score = nb.score(X_test, y_test)
 ```
 
 via [DataCamp](https://campus.datacamp.com/courses/preprocessing-for-machine-learning-in-python/selecting-features-for-modeling):
+
+For a given row (the tf-idf weights for the terms in a document), this will return an array of the `top_n` weighted words:
 
 ```python
 def return_weights(vocab, original_vocab, vector, vector_index, top_n):
