@@ -106,18 +106,15 @@ dict(zip(X[0].indices, X[0].data))
 {3: 0.8610369959439764, 4: 0.5085423203783267}
 ```
 
-## Fitting a model
+## Filtering a tf-idf vector
 
-y = volunteer["category_desc"]
-X_train, X_test, y_train, y_test = train_test_split(text_tfidf.toarray(), y, stratify=y)
+The problem with the tf-idf vector is that it may contain thousands of words depending on the size of the corpus.
 
-nb.fit(X_train, y_train)
-score = nb.score(X_test, y_test)
-```
+We don't want to train a model on using all of those features (the words). Instead, we can identify the most `top_n` most important terms in each document and then filter the tf-idf vector so it only contains the columns for terms that are in the `top_n` for any of the documents.
 
-via [DataCamp](https://campus.datacamp.com/courses/preprocessing-for-machine-learning-in-python/selecting-features-for-modeling):
+This code is via [DataCamp](https://campus.datacamp.com/courses/preprocessing-for-machine-learning-in-python/selecting-features-for-modeling):
 
-For a given row (the tf-idf weights for the terms in a document), this will return an array of the `top_n` weighted words:
+This function, `return_weights`, is poorly named. It doesn't return the weights, but instead returns the indeces of the `top_n` terms in a given row.
 
 ```python
 def return_weights(vocab, original_vocab, vector, vector_index, top_n):
@@ -133,6 +130,42 @@ def return_weights(vocab, original_vocab, vector, vector_index, top_n):
 print(return_weights(vocab, tfidf_vec.vocabulary_, text_tfidf, 8, 3))
 ```
 
+For example:
+
+```
+return_weights(vocab, vectorizer.vocabulary_, X, 0, 1)
+```
+
+```
+[3]
+```
+
+It returns 3 because in the first row (index `0`), we're looking at the top `1` weight, which is `0.861037`, which is in the fourth column (index `3`).
+
+If instead we looked at the top `2` terms:
+
+```
+return_weights(vocab, vectorizer.vocabulary_, X, 0, 2)
+```
+
+```
+[3, 4]
+```
+
+Because the two terms (`Sola` and `runs`) are in the fourth and fifth columns (index `3` and `4`).
+
+The second column has a tie in weights between `dog` and `is` (both have a weight of `0.652491`) but `sort_values` winds up putting `dog` first for some reason, so this returns index `2`:
+
+```python
+return_weights(vocab, vectorizer.vocabulary_, X, 1, 1)
+```
+
+```
+[2]
+```
+
+Using this, we can iterate over all of the rows (documents) and determine the `top_n` words. `words_to_filter` returns their indeces. 
+
 ```python
 def words_to_filter(vocab, original_vocab, vector, top_n):
     filter_list = []
@@ -143,21 +176,41 @@ def words_to_filter(vocab, original_vocab, vector, top_n):
         filter_list.extend(filtered)
     # Return the list in a set, so we don't get duplicate word indices
     return set(filter_list)
-
-# Call the function to get the list of word indices
-filtered_words = words_to_filter(vocab, tfidf_vec.vocabulary_, text_tfidf, 3)
-
-# By converting filtered_words back to a list, we can use it to filter the columns in the text vector
-filtered_text = text_tfidf[:, list(filtered_words)]
 ```
 
+For example, if we specify `top_n` is 1, then it iterates over each row and grabs the index for the highest weighted term:
+
+```
+filtered_words = words_to_filter(vocab, vectorizer.vocabulary_, X, 1)
+```
+
+```
+{0, 2, 3}
+```
+
+This returns a set of `{0, 2, 3}` because the in row 1 the highest weighted term is at index 3 (`Sola`), row 2 at index 2 (`dog`), row 3 at index 0 (`chews`).
+
+Then we can filter the original vector down to just these important terms:
+
 ```python
-# Split the dataset according to the class distribution of category_desc, using the filtered_text vector
-train_X, test_X, train_y, test_y = train_test_split(filtered_text.toarray(), y, stratify=y)
+filtered_text = X[:, list(filtered_words)]
+filtered_text.todense()
+```
 
-# Fit the model to the training data
-nb.fit(train_X, train_y)
+```
+[[0.         0.         0.861037  ]
+ [0.         0.65249088 0.        ]
+ [0.65249088 0.         0.        ]]
+```
 
-# Print out the model's accuracy
-print(nb.score(test_X, test_y))
+## Fitting a model
+
+We can either fit a model to all of the words or just the most important ones (using the technique above to limit it to the `top_n` in each document):
+
+```
+y = df["converted"]
+X_train, X_test, y_train, y_test = train_test_split(X.toarray(), y, stratify=y)
+
+nb.fit(X_train, y_train)
+score = nb.score(X_test, y_test)
 ```
