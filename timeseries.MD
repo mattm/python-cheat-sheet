@@ -2,6 +2,8 @@
 
 ## Basic Chart
 
+Note that the x-axis values must be sorted in the data frame for the chart to render correctly.
+
 ```python
 fig, ax = plt.subplots(figsize=(12, 6))
 df.plot("sign_up_month", "new_trials", ax=ax)
