@@ -112,27 +112,21 @@ The problem with the tf-idf vector is that it may contain thousands of words dep
 
 We don't want to train a model on using all of those features (the words). Instead, we can identify the most `top_n` most important terms in each document and then filter the tf-idf vector so it only contains the columns for terms that are in the `top_n` for any of the documents.
 
-This code is via [DataCamp](https://campus.datacamp.com/courses/preprocessing-for-machine-learning-in-python/selecting-features-for-modeling):
+This code is inspired via DataCamp's [Selecting Features for Modeling course](https://campus.datacamp.com/courses/preprocessing-for-machine-learning-in-python/selecting-features-for-modeling):
 
 This function, `return_weights`, is poorly named. It doesn't return the weights, but instead returns the indeces of the `top_n` terms in a given row.
 
 ```python
 def return_weights(vocab, original_vocab, vector, vector_index, top_n):
     zipped = dict(zip(vector[vector_index].indices, vector[vector_index].data))
-    
-    # Let's transform that zipped dict into a series
     zipped_series = pd.Series({vocab[i]:zipped[i] for i in vector[vector_index].indices})
-    
-    # Let's sort the series to pull out the top n weighted words
     zipped_index = zipped_series.sort_values(ascending=False)[:top_n].index
     return [original_vocab[i] for i in zipped_index]
-
-print(return_weights(vocab, tfidf_vec.vocabulary_, text_tfidf, 8, 3))
 ```
 
 For example:
 
-```
+```python
 return_weights(vocab, vectorizer.vocabulary_, X, 0, 1)
 ```
 
@@ -144,7 +138,7 @@ It returns 3 because in the first row (index `0`), we're looking at the top `1` 
 
 If instead we looked at the top `2` terms:
 
-```
+```python
 return_weights(vocab, vectorizer.vocabulary_, X, 0, 2)
 ```
 
@@ -170,17 +164,15 @@ Using this, we can iterate over all of the rows (documents) and determine the `t
 def words_to_filter(vocab, original_vocab, vector, top_n):
     filter_list = []
     for i in range(0, vector.shape[0]):
-    
-        # Here we'll call the function from the previous exercise, and extend the list we're creating
         filtered = return_weights(vocab, original_vocab, vector, i, top_n)
         filter_list.extend(filtered)
-    # Return the list in a set, so we don't get duplicate word indices
-    return set(filter_list)
+
+return set(filter_list)
 ```
 
 For example, if we specify `top_n` is 1, then it iterates over each row and grabs the index for the highest weighted term:
 
-```
+```python
 filtered_words = words_to_filter(vocab, vectorizer.vocabulary_, X, 1)
 ```
 
@@ -207,7 +199,7 @@ filtered_text.todense()
 
 We can either fit a model to all of the words or just the most important ones (using the technique above to limit it to the `top_n` in each document):
 
-```
+```python
 y = df["converted"]
 X_train, X_test, y_train, y_test = train_test_split(X.toarray(), y, stratify=y)
 
