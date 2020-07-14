@@ -114,10 +114,10 @@ We don't want to train a model on using all of those features (the words). Inste
 
 This code is inspired via DataCamp's [Selecting Features for Modeling course](https://campus.datacamp.com/courses/preprocessing-for-machine-learning-in-python/selecting-features-for-modeling):
 
-This function, `return_weights`, is poorly named. It doesn't return the weights, but instead returns the indeces of the `top_n` terms in a given row.
+This function returns the indeces of the `top_n` terms in a given row.
 
 ```python
-def return_weights(vocab, original_vocab, vector, vector_index, top_n):
+def return_indeces_of_top_terms_in_document(vocab, original_vocab, vector, vector_index, top_n):
     zipped = dict(zip(vector[vector_index].indices, vector[vector_index].data))
     zipped_series = pd.Series({vocab[i]:zipped[i] for i in vector[vector_index].indices})
     zipped_index = zipped_series.sort_values(ascending=False)[:top_n].index
@@ -127,7 +127,7 @@ def return_weights(vocab, original_vocab, vector, vector_index, top_n):
 For example:
 
 ```python
-return_weights(vocab, vectorizer.vocabulary_, X, 0, 1)
+return_indeces_of_top_terms_in_document(vocab, vectorizer.vocabulary_, X, 0, 1)
 ```
 
 ```
@@ -139,7 +139,7 @@ It returns 3 because in the first row (index `0`), we're looking at the top `1` 
 If instead we looked at the top `2` terms:
 
 ```python
-return_weights(vocab, vectorizer.vocabulary_, X, 0, 2)
+return_indeces_of_top_terms_in_document(vocab, vectorizer.vocabulary_, X, 0, 2)
 ```
 
 ```
@@ -158,10 +158,10 @@ return_weights(vocab, vectorizer.vocabulary_, X, 1, 1)
 [2]
 ```
 
-Using this, we can iterate over all of the rows (documents) and determine the `top_n` words. `words_to_filter` returns their indeces. 
+Using this, we can iterate over all of the rows (documents) and determine the `top_n` words. `return_top_term_indeces` returns their indeces. 
 
 ```python
-def words_to_filter(vocab, original_vocab, vector, top_n):
+def return_top_term_indeces(vocab, original_vocab, vector, top_n):
     filter_list = []
     for i in range(0, vector.shape[0]):
         filtered = return_weights(vocab, original_vocab, vector, i, top_n)
@@ -173,7 +173,7 @@ return set(filter_list)
 For example, if we specify `top_n` is 1, then it iterates over each row and grabs the index for the highest weighted term:
 
 ```python
-filtered_words = words_to_filter(vocab, vectorizer.vocabulary_, X, 1)
+indeces = return_top_term_indeces(vocab, vectorizer.vocabulary_, X, 1)
 ```
 
 ```
@@ -185,11 +185,65 @@ This returns a set of `{0, 2, 3}` because the in row 1 the highest weighted term
 Then we can filter the original vector down to just these important terms:
 
 ```python
-filtered_text = X[:, list(filtered_words)]
-filtered_text.todense()
+X_filtered = X[:, list(indeces)]
+X_filtered.todense()
 ```
 
 ```
+[[0.         0.         0.861037  ]
+ [0.         0.65249088 0.        ]
+ [0.65249088 0.         0.        ]]
+```
+
+Putting it all together:
+
+```python
+def return_indeces_of_top_terms_in_document(vocab, original_vocab, vector, vector_index, top_n):
+    zipped = dict(zip(vector[vector_index].indices, vector[vector_index].data))    
+    zipped_series = pd.Series({vocab[i]:zipped[i] for i in vector[vector_index].indices})
+    zipped_index = zipped_series.sort_values(ascending=False)[:top_n].index
+    return [original_vocab[i] for i in zipped_index]
+
+def return_top_term_indeces(vocab, original_vocab, vector, top_n):
+    filter_list = []
+    for i in range(0, vector.shape[0]):    
+        filtered = return_indeces_of_top_terms_in_document(vocab, original_vocab, vector, i, top_n)
+        filter_list.extend(filtered)
+    return set(filter_list)
+
+def select_highest_weighted_terms(vectorizer, X, top_n):
+    vocab = {v:k for k, v in vectorizer.vocabulary_.items()}
+
+    indeces = return_top_term_indeces(vocab, vectorizer.vocabulary_, X, 1)
+    return X[:, list(indeces)]
+
+df = pd.DataFrame({
+    "words": ["Sola runs", "Sola is a dog", "Sola chews toys"]
+})
+
+vectorizer = TfidfVectorizer()
+X = vectorizer.fit_transform(df["words"])
+
+print("Data Frame:\n{}\n".format(pd.DataFrame(X.todense(), columns=vectorizer.get_feature_names())))
+print("Values:\n{}\n".format(X.todense()))
+
+X_filtered = select_highest_weighted_terms(vectorizer, X, 1)
+print("Filtered values:\n{}\n".format(X_filtered.todense()))
+```
+
+```
+Data Frame:
+      chews       dog        is      runs      sola      toys
+0  0.000000  0.000000  0.000000  0.861037  0.508542  0.000000
+1  0.000000  0.652491  0.652491  0.000000  0.385372  0.000000
+2  0.652491  0.000000  0.000000  0.000000  0.385372  0.652491
+
+Values:
+[[0.         0.         0.         0.861037   0.50854232 0.        ]
+ [0.         0.65249088 0.65249088 0.         0.38537163 0.        ]
+ [0.65249088 0.         0.         0.         0.38537163 0.65249088]]
+
+Filtered values:
 [[0.         0.         0.861037  ]
  [0.         0.65249088 0.        ]
  [0.65249088 0.         0.        ]]
