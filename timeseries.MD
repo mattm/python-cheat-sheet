@@ -4,7 +4,6 @@
 
 ```python
 df = pd.read_csv("data.csv", names=["sign_up_month", "new_trials"], header=0, index_col="sign_up_month")
-df = df.sort_values("sign_up_month")
 ```
 
 Method 1:
@@ -24,6 +23,18 @@ fig, ax = plt.subplots()
 df.plot(ax=ax)
 ax.set(title="Sign Ups by Month", xlabel="Sign Up Month", ylabel="New Trials")
 ax.get_legend().remove()
+plt.show()
+```
+
+Can plot multiple charts using this second method:
+
+```python
+df = pd.read_csv("help_scout companies 2020-07-15T1629.csv", names=["close_month", "new_customers", "new_mrr"], header=0, index_col="close_month")
+
+# Arguments are number of rows, number of columns
+fig, ax = plt.subplots(2, 1)
+df[["new_customers"]].plot(ax=ax[0])
+df[["new_mrr"]].plot(ax=ax[1])
 plt.show()
 ```
 
