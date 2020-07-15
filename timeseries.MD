@@ -29,7 +29,9 @@ plt.show()
 Can plot multiple charts using this second method:
 
 ```python
-df = pd.read_csv("help_scout companies 2020-07-15T1629.csv", names=["close_month", "new_customers", "new_mrr"], header=0, index_col="close_month")
+# We'll plot two columns from one data frame in two separate charts
+# but can easily plot a different data frame on each chart
+df = pd.read_csv("data.csv", names=["close_month", "new_customers", "new_mrr"], header=0, index_col="close_month")
 
 # Arguments are number of rows, number of columns
 fig, ax = plt.subplots(2, 1)
