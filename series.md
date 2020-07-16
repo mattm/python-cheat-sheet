@@ -214,6 +214,8 @@ dtype: float64
 
 Because 12/10-1 = 0.20, 15/12-1 = 0.25, 30/15-1 = 1.00.
 
+`pct_change()` can also be applied to a data frame in which case it replaces the column values with the percent changes.
+
 ## Correlation between two series
 
 ```python
