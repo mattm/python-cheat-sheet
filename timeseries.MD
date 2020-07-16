@@ -61,3 +61,42 @@ df['2019']
 stock_price       
 2019-01-01      25
 ```
+
+## Resampling
+
+For example, if your data frame has daily values but you want monthly:
+
+```python
+df = pd.DataFrame({
+    "date": pd.to_datetime(["2020-01-05", "2020-01-06", "2020-02-10"]),
+    "revenue": [10, 18, 3]
+})
+df = df.set_index("date")
+df = df.resample(rule="MS").sum()
+df
+```
+
+```
+            revenue
+date               
+2020-01-01       28
+2020-02-01        3
+```
+
+Here `MS` is "month start" but could easily use `M` for "month end" or [other date offsets](https://pandas.pydata.org/pandas-docs/stable/user_guide/timeseries.html#dateoffset-objects).
+
+## Autocorrelation
+
+```python
+df["pct_change"] = df["col"].pct_change()
+df["pct_change"].autocorr()
+```
+
+```
+-0.040576
+```
+
+* Autocorrelation (aka serial correlation) is the correlation of a time series with a lagged copy of itself
+* It's lag-one autocorrelation. For example, with daily time series we'd be comparing one day's value to the value the previous day.
+* When autocorrelation is negative, we say the series is _mean reverting_ (when it goes up, it later tends to go down)
+* When autocorrelation is positive, we say the series is _trend following_ or that it has _momentum_ (when it goes up, it later tends to keep going up)
