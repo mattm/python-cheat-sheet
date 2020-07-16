@@ -19,7 +19,7 @@ np.random.random()
 Can also specify the quantity:
 
 ```python
-np.random.rand(size = 10)
+np.random.rand(10)
 ```
 
 ## Generate a random integer between 0 and 10
