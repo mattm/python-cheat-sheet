@@ -100,3 +100,26 @@ df["pct_change"].autocorr()
 * It's lag-one autocorrelation. For example, with daily time series we'd be comparing one day's value to the value the previous day.
 * When autocorrelation is negative, we say the series is _mean reverting_ (when it goes up, it later tends to go down)
 * When autocorrelation is positive, we say the series is _trend following_ or that it has _momentum_ (when it goes up, it later tends to keep going up)
+
+## Autocorrelation function
+
+This lets us look at the a bunch of correlations, not just the lag-one correlation.
+
+```python
+from statsmodels.graphics.tsaplots import plot_acf
+from statsmodels.tsa.stattools import acf
+
+series = pd.Series([1, 2, 10, 1, 2, 10])
+
+_ = plot_acf(series, lags=3, alpha=1)
+
+acf_values = acf(series, nlags=3, fft=False)
+print(acf_values)
+```
+
+```
+[ 1.         -0.30593607 -0.44406393  0.5       ]
+```
+
+* At 0 lags, the autocorrelation is always 1 because a value is always perfectly correlated with itself
+* At 3 lags, the autocorrelation here is 0.5 (not 1) because the first 3 values out of the 6 don't have a lag-three.
