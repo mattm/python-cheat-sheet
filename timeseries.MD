@@ -156,20 +156,22 @@ print(interpret(p_value))
 
 # Non-stationary: the observations are impacted by seasonality, trends, and other things that time impacts
 # It does have a unit root meaning it is unpredictable
-flips = pd.DataFrame(np.random.rand(1000), columns=["flip"])
-flips["flip"] = flips["flip"].apply(lambda flip: -1 if flip < 0.5 else 1)
-flips["cumulative"] = flips["flip"].cumsum()
-nonstationary = flips["cumulative"]
+randomness = np.random.normal(loc=0, scale=1, size=1000)
+randomness[0] = 0
+nonstationary = 100 + np.cumsum(randomness)
 p_value = adfuller(nonstationary)[1]
 print("\np-value for random walk: {:2f}".format(p_value))
 print(interpret(p_value))
 
 fig, ax = plt.subplots(2, 1, figsize=(6, 6))
+fig.set_facecolor("white")
 fig.tight_layout(pad=3)
 ax[0].plot(stationary)
 ax[0].set(title="Stationary:")
 ax[1].plot(nonstationary)
 ax[1].set(title="Non-stationary:")
+
+plt.savefig("match.png", bbox_inches="tight", pad_inches=0)
 plt.show()
 ```
 
@@ -180,7 +182,7 @@ Alternative hypothesis: series is stationary
 p-value for observations pulled from normal distribution: 0.000000
   p-value < 0.05 so we reject the null hypothesis because the data does not have a unit root and is stationary
 
-p-value for random walk: 0.610345
+p-value for random walk: 0.593541
   p-value >= 0.05 so we fail to reject the null hypothesis because the data has a unit root and is non-stationary
 ```
 
