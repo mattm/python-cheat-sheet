@@ -34,6 +34,8 @@ Can plot multiple charts using this second method:
 df = pd.read_csv("data.csv", names=["close_month", "new_customers", "new_mrr"], header=0, index_col="close_month")
 
 # Arguments are number of rows, number of columns
+# You can also adjust the size of the charts by passing an argument to `subplots` like `figsize=(6, 8)`
+# `plot` can also take a `x` argument if the x values are not the index
 fig, ax = plt.subplots(2, 1)
 df.plot(y="new_customers", ax=ax[0])
 df.plot(y="new_mrr", ax=ax[1])
