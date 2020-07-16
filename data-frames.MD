@@ -984,3 +984,22 @@ df['test_average'] = df.apply(lambda row: row[['test1', 'test2']].mean(), axis=1
 0    Ava    100     90          95.0
 1  Mason     98     90          94.0
 ```
+
+## Calculating the differences from one row to the next
+
+```python
+df = pd.DataFrame({
+    "date": pd.to_datetime(["2020-01-05", "2020-01-06", "2020-01-07"]),
+    "revenue": [10, 18, 12]
+})
+df = df.set_index("date")
+df.diff()
+```
+
+```
+            revenue
+date               
+2020-01-05      NaN
+2020-01-06      8.0
+2020-01-07     -6.0
+```
