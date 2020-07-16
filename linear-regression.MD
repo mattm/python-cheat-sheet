@@ -19,7 +19,7 @@ df = sm.add_constant(df)
 
 result = sm.OLS(df["y"], df[["x"]]).fit()
 
-print("\nSummary:\n{}\n".format(result.summary()))
+print("\nSummary:\n{}".format(result.summary()))
 print("\nSlope:\n{}".format(result.params[0]))
 ```
 
@@ -49,7 +49,6 @@ Kurtosis:                       1.589   Cond. No.                         1.00
 
 Warnings:
 [1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
-
 
 Slope:
 10.542857142857143
