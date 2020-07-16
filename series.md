@@ -213,3 +213,16 @@ dtype: float64
 ```
 
 Because 12/10-1 = 0.20, 15/12-1 = 0.25, 30/15-1 = 1.00.
+
+## Correlation between two series
+
+```python
+s1 = pd.Series([1, 2, 3, 4])
+s2 = pd.Series([10, 20, 30, 40])
+
+s1.corr(s2)
+```
+
+```
+1.0
+```
