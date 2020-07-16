@@ -181,7 +181,7 @@ series
 dtype: float64
 ```
 
-# Determining the largest values
+## Determining the largest values
 
 ```python
 s = pd.Series([5, 10, 3, 20, 100, 48, 3, 2, 1000])
@@ -196,3 +196,20 @@ s.nlargest()
 1      10
 dtype: int64
 ```
+
+## Percent changes
+
+```python
+s = pd.Series([10, 12, 15, 30])
+s.pct_change()
+```
+
+```
+0     NaN
+1    0.20
+2    0.25
+3    1.00
+dtype: float64
+```
+
+Because 12/10-1 = 0.20, 15/12-1 = 0.25, 30/15-1 = 1.00.
