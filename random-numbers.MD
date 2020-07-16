@@ -52,3 +52,20 @@ array([[18, 91],
 ```python
 np.random.normal(size=100)
 ```
+
+Can specify the mean with `loc` and standard deviration with `scale`:
+
+```python
+returns = np.random.normal(loc=0.02, scale=0.05, size=1000)
+```
+
+```python
+mean = np.mean(returns)
+std = np.std(returns)
+print("The mean is %5.3f and the standard deviation is %5.3f" %(mean, std))
+```
+
+```
+The mean is 0.018 and the standard deviation is 0.050
+```
+
