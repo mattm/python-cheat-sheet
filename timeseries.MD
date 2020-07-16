@@ -35,8 +35,8 @@ df = pd.read_csv("data.csv", names=["close_month", "new_customers", "new_mrr"], 
 
 # Arguments are number of rows, number of columns
 fig, ax = plt.subplots(2, 1)
-df[["new_customers"]].plot(ax=ax[0])
-df[["new_mrr"]].plot(ax=ax[1])
+df.plot(y="new_customers", ax=ax[0])
+df.plot(y="new_mrr", ax=ax[1])
 plt.show()
 ```
 
