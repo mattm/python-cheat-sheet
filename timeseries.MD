@@ -186,4 +186,4 @@ p-value for random walk: 0.593541
   p-value >= 0.05 so we fail to reject the null hypothesis because the data has a unit root and is non-stationary
 ```
 
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stationary-vs-nonstationary.png?raw=true)
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stationary-vs-nonstationary-revised.png?raw=true)
