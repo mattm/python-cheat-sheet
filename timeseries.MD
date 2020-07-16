@@ -123,3 +123,65 @@ print(acf_values)
 
 * At 0 lags, the autocorrelation is always 1 because a value is always perfectly correlated with itself
 * At 3 lags, the autocorrelation here is 0.5 (not 1) because the first 3 values out of the 6 don't have a lag-three.
+
+## Random walks
+
+* In a random walk, today's price is equal to yesterday's price plus some noise (`eta`)
+* You can't forecast a random walk; best guess is the last price
+* There can also be _drift_: the price changes by some amount on average (`mu`) in addition to the white noise
+* To test whether a series is a random walk, you can regress current prices on lag prices. If the slope coefficient `beta` is not significantly different than 1, then we cannot reject the null hypothesis that the series is a random walk.
+
+## Stationary vs non-stationary time series
+
+```python
+from statsmodels.tsa.stattools import adfuller
+import pandas as pd
+import numpy as np
+
+def interpret(p_value):
+    if p_value < 0.05:
+        return "  p-value < 0.05 so we reject the null hypothesis because the data does not have a unit root and is stationary"
+    else:
+        return "  p-value >= 0.05 so we fail to reject the null hypothesis because the data has a unit root and is non-stationary"
+
+print("Null hypothesis: series is a non-stationary")
+print("Alternative hypothesis: series is stationary\n")
+
+# Stationary: mean and standard deviation of the observations are consistent over time
+# It does NOT have a unit root meaning that it is predictable
+stationary = np.random.normal(loc=10, scale=1, size=1000)
+p_value = adfuller(stationary)[1]
+print("p-value for observations pulled from normal distribution: {:2f}".format(p_value))
+print(interpret(p_value))
+
+# Non-stationary: the observations are impacted by seasonality, trends, and other things that time impacts
+# It does have a unit root meaning it is unpredictable
+flips = pd.DataFrame(np.random.rand(1000), columns=["flip"])
+flips["flip"] = flips["flip"].apply(lambda flip: -1 if flip < 0.5 else 1)
+flips["cumulative"] = flips["flip"].cumsum()
+nonstationary = flips["cumulative"]
+p_value = adfuller(nonstationary)[1]
+print("\np-value for random walk: {:2f}".format(p_value))
+print(interpret(p_value))
+
+fig, ax = plt.subplots(2, 1, figsize=(6, 6))
+fig.tight_layout(pad=3)
+ax[0].plot(stationary)
+ax[0].set(title="Stationary:")
+ax[1].plot(nonstationary)
+ax[1].set(title="Non-stationary:")
+plt.show()
+```
+
+```
+Null hypothesis: series is a non-stationary
+Alternative hypothesis: series is stationary
+
+p-value for observations pulled from normal distribution: 0.000000
+  p-value < 0.05 so we reject the null hypothesis because the data does not have a unit root and is stationary
+
+p-value for random walk: 0.610345
+  p-value >= 0.05 so we fail to reject the null hypothesis because the data has a unit root and is non-stationary
+```
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stationary-vs-nonstationary.png?raw=true)
