@@ -40,6 +40,12 @@ Returns a tuple with the rows and columns.
 rows, columns = df.shape
 ```
 
+Can also get the number of rows using `len(df)` which is equivalent to `df.shape[0]`:
+
+```python
+len(df)
+```
+
 ## Determining column names
 
 ```python
