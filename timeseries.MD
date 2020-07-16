@@ -144,7 +144,7 @@ def interpret(p_value):
     else:
         return "  p-value >= 0.05 so we fail to reject the null hypothesis because the data has a unit root and is non-stationary"
 
-print("Null hypothesis: series is a non-stationary")
+print("Null hypothesis: series is non-stationary")
 print("Alternative hypothesis: series is stationary\n")
 
 # Stationary: mean and standard deviation of the observations are consistent over time
@@ -174,7 +174,7 @@ plt.show()
 ```
 
 ```
-Null hypothesis: series is a non-stationary
+Null hypothesis: series is non-stationary
 Alternative hypothesis: series is stationary
 
 p-value for observations pulled from normal distribution: 0.000000
