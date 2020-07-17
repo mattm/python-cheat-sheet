@@ -207,18 +207,6 @@ Other notes:
 
 Code and charts here via [DataCamp's time series course](https://campus.datacamp.com/courses/time-series-analysis-in-python/autoregressive-ar-models?ex=2).
 
-```python
-from statsmodels.tsa.arima_process import ArmaProcess
-
-plt.subplot(2,1,1)
-ar1 = np.array([1, -0.9])
-ma1 = np.array([1])
-AR_object1 = ArmaProcess(ar1, ma1)
-simulated_data_1 = AR_object1.generate_sample(nsample=1000)
-plt.plot(simulated_data_1)
-plt.show()
-```
-
 * AR stands for Autoregressive. Regressive (you're trying to predict something from other things) and auto (you're trying to predict based on past values of that same thing). Typically when doing regression we're predicting based on other things, but we may be able to predict values based on what the value was last week/month/year etc.
 * An AR(1) model will be based on one laggard value. Can also have AR(2), AR(3), etc.
 * `Rt = mu + phi * Rt-1 + eta`. If `phi` is 1, then the process is a random walk because the next value in the series is very dependent on the last value. If `phi` is 0, then the process is white noise because it's not dependent at all on the last value. If `phi` is between -1 and 1 then the process is stationary. Otherwise (if it's less than -1 or greater than 1) then it's non-stationary. Negative `phi` values are _mean reverting_ (a positive value is more likely to be followed by a negative value). A positive value means a positive value is more likely to be followed by a positive value (it has _momentum_ and is _trend following_).
@@ -231,6 +219,69 @@ plt.show()
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/autoregression-functions-phi.png?raw=true)
 
+#### Simulating a autoregressive trend
+
+```python
+from statsmodels.tsa.arima_process import ArmaProcess
+
+plt.subplot(2,1,1)
+ar1 = np.array([1, -0.9])
+ma1 = np.array([1])
+AR_object1 = ArmaProcess(ar1, ma1)
+simulated_data_1 = AR_object1.generate_sample(nsample=1000)
+plt.plot(simulated_data_1)
+plt.show()
+```
+
 * ARMA stands for Autoregressive-moving-average
 * First argument to `ArmaProcess` is `ar`. The AR part involves regressing the variable on its own lagged (i.e., past) values ([#](https://en.wikipedia.org/wiki/Autoregressive%E2%80%93moving-average_model)). It's an array that represents the coefficient for autoregressive lag polynomial, including zero lag (which is almost always 1). Also, due to using the lag-polynomial representation, the AR parameters should have the opposite sign of what one would write in the ARMA representation ([#](https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima_process.ArmaProcess.html)). So if you want the AR parameter to be 0.9, you have to use -0.9 in the array.
 * Second argument is `ma`. The MA part involves modeling the error term as a linear combination of error terms occurring contemporaneously and at various times in the past. It's an array that represents the coefficients for moving-average lag polynomial, including zero lag.
+
+#### Modeling an autoregressive trend
+
+```python
+from statsmodels.tsa.arima_process import ArmaProcess
+from statsmodels.tsa.arima_model import ARMA
+
+# Simulate data using a phi of +0.9
+AR_object1 = ArmaProcess([1, -0.9], [1])
+simulated_data_1 = AR_object1.generate_sample(nsample=1000)
+
+# Now see if we can fit an autoregressive model to the simulated data
+model = ARMA(simulated_data_1, order=(1, 0))
+result = model.fit()
+
+print(result.summary())
+
+# Print out the estimate for the constant and for phi
+print("\nWhen the true phi=0.9, the estimate of phi (and the constant) are:")
+print("Mu: {:.2f}".format(result.params[0]))
+print("Phi: {:.2f}".format(result.params[1]))
+```
+
+```
+                              ARMA Model Results                              
+==============================================================================
+Dep. Variable:                      y   No. Observations:                 1000
+Model:                     ARMA(1, 0)   Log Likelihood               -1407.583
+Method:                       css-mle   S.D. of innovations              0.988
+Date:                Fri, 17 Jul 2020   AIC                           2821.167
+Time:                        10:56:26   BIC                           2835.890
+Sample:                             0   HQIC                          2826.763
+                                                                              
+==============================================================================
+                 coef    std err          z      P>|z|      [0.025      0.975]
+------------------------------------------------------------------------------
+const          0.5388      0.273      1.976      0.048       0.004       1.073
+ar.L1.y        0.8863      0.015     60.659      0.000       0.858       0.915
+                                    Roots                                    
+=============================================================================
+                  Real          Imaginary           Modulus         Frequency
+-----------------------------------------------------------------------------
+AR.1            1.1283           +0.0000j            1.1283            0.0000
+-----------------------------------------------------------------------------
+
+When the true phi=0.9, the estimate of phi (and the constant) are:
+Mu: -0.00
+Phi: 0.89
+```
