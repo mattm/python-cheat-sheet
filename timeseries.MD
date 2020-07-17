@@ -163,15 +163,23 @@ p_value = adfuller(nonstationary)[1]
 print("\np-value for random walk: {:2f}".format(p_value))
 print(interpret(p_value))
 
-fig, ax = plt.subplots(2, 1, figsize=(6, 6))
+nonstationary_stationary = pd.Series(nonstationary).diff().dropna()
+p_value = adfuller(nonstationary_stationary)[1]
+print("\np-value for random walk diff: {:2f}".format(p_value))
+print(interpret(p_value))
+
+fig, ax = plt.subplots(3, 1, figsize=(6, 6))
 fig.set_facecolor("white")
 fig.tight_layout(pad=3)
-ax[0].plot(stationary)
-ax[0].set(title="Stationary:")
-ax[1].plot(nonstationary)
-ax[1].set(title="Non-stationary:")
 
-plt.savefig("match.png", bbox_inches="tight", pad_inches=0)
+ax[0].set(title="Stationary:")
+ax[0].plot(stationary)
+
+ax[1].set(title="Non-stationary:")
+ax[1].plot(nonstationary)
+
+ax[2].set(title="Non-stationary made stationary:")
+ax[2].plot(nonstationary_stationary)
 plt.show()
 ```
 
@@ -182,8 +190,15 @@ Alternative hypothesis: series is stationary
 p-value for observations pulled from normal distribution: 0.000000
   p-value < 0.05 so we reject the null hypothesis because the data does not have a unit root and is stationary
 
-p-value for random walk: 0.593541
+p-value for random walk: 0.936132
   p-value >= 0.05 so we fail to reject the null hypothesis because the data has a unit root and is non-stationary
+
+p-value for random walk diff: 0.000000
+  p-value < 0.05 so we reject the null hypothesis because the data does not have a unit root and is stationary
 ```
 
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stationary-vs-nonstationary-revised.png?raw=true)
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/stationary-vs-nonstationary-3.png?raw=true)
+
+Other notes:
+
+* A random wa
