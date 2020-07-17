@@ -285,3 +285,12 @@ When the true phi=0.9, the estimate of phi (and the constant) are:
 Mu: -0.00
 Phi: 0.89
 ```
+
+We can also predict future values using the model:
+
+```python
+result.plot_predict(start=990, end=1010)
+plt.show()
+```
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/autoregression-plot-predict.png?raw=true)
