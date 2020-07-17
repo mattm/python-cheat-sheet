@@ -201,4 +201,36 @@ p-value for random walk diff: 0.000000
 
 Other notes:
 
-* A random wa
+* To take an exponential trend with seasonality (like Amazon's quarterly earnings) you could take a log of it (to make it linear) then diff-4 (to remove the seasonality).
+
+## ARMA Process
+
+Code and charts here via [DataCamp's time series course](https://campus.datacamp.com/courses/time-series-analysis-in-python/autoregressive-ar-models?ex=2).
+
+```python
+from statsmodels.tsa.arima_process import ArmaProcess
+
+plt.subplot(2,1,1)
+ar1 = np.array([1, -0.9])
+ma1 = np.array([1])
+AR_object1 = ArmaProcess(ar1, ma1)
+simulated_data_1 = AR_object1.generate_sample(nsample=1000)
+plt.plot(simulated_data_1)
+plt.show()
+```
+
+* AR stands for Autoregressive. Regressive (you're trying to predict something from other things) and auto (you're trying to predict based on past values of that same thing). Typically when doing regression we're predicting based on other things, but we may be able to predict values based on what the value was last week/month/year etc.
+* An AR(1) model will be based on one laggard value. Can also have AR(2), AR(3), etc.
+* `Rt = mu + phi * Rt-1 + eta`. If `phi` is 1, then the process is a random walk because the next value in the series is very dependent on the last value. If `phi` is 0, then the process is white noise because it's not dependent at all on the last value. If `phi` is between -1 and 1 then the process is stationary. Otherwise (if it's less than -1 or greater than 1) then it's non-stationary. Negative `phi` values are _mean reverting_ (a positive value is more likely to be followed by a negative value). A positive value means a positive value is more likely to be followed by a positive value (it has _momentum_ and is _trend following_).
+
+#### Autoregressive time series with different values of phi
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/autoregression-timeseries-phi.png?raw=true)
+
+#### Autocorrelation function with different values of phi
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/autoregression-functions-phi.png?raw=true)
+
+* ARMA stands for Autoregressive-moving-average
+* First argument to `ArmaProcess` is `ar`. The AR part involves regressing the variable on its own lagged (i.e., past) values ([#](https://en.wikipedia.org/wiki/Autoregressive%E2%80%93moving-average_model)). It's an array that represents the coefficient for autoregressive lag polynomial, including zero lag (which is almost always 1). Also, due to using the lag-polynomial representation, the AR parameters should have the opposite sign of what one would write in the ARMA representation ([#](https://www.statsmodels.org/stable/generated/statsmodels.tsa.arima_process.ArmaProcess.html)). So if you want the AR parameter to be 0.9, you have to use -0.9 in the array.
+* Second argument is `ma`. The MA part involves modeling the error term as a linear combination of error terms occurring contemporaneously and at various times in the past. It's an array that represents the coefficients for moving-average lag polynomial, including zero lag.
