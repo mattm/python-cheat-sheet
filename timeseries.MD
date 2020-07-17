@@ -294,3 +294,20 @@ plt.show()
 ```
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/autoregression-plot-predict.png?raw=true)
+
+#### Determining the order when it's unknown
+
+```python
+from statsmodels.tsa.arima_process import ArmaProcess
+from statsmodels.graphics.tsaplots import plot_pacf
+
+# Simulate an AR(2) series
+ar_object = ArmaProcess([1, -0.6, -0.3], [1])
+simulated_data = ar_object.generate_sample(nsample=5000)
+
+# Then use the plot_pacf function to figure out the order
+plot_pacf(simulated_data, lags=20)
+plt.show()
+```
+
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/pacf.png?raw=true)
