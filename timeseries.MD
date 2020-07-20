@@ -317,7 +317,11 @@ plot_pacf(simulated_data, lags=20)
 plt.show()
 ```
 
+PACF might look something like this:
+
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/pacf.png?raw=true)
+
+The statistically significant lags would be a good fit for your model. The insignificant ones indicate there's no correlation between that lag and the current value. Negative means that there's a negative correlation (when the value X time periods ago was high, this time period tended to be lower).
 
 #### Method 2: Using the information criteria
 
@@ -352,7 +356,79 @@ plt.ylabel('Bayesian Information Criterion')
 plt.show()
 ```
 
+## Moving Average Model
+
+The predicted value is some mean + a % of the last error. For example, if the mean is 10, and the actual last value was 12, then the error was 2. If the % (theta) is 0.5, then your next predicted value would be 10 + 0.5 * 2 = 11. Now if the next actual value is 7, then the error is -4, so you do 10 + 0.5 * -4 = 8, and so on.
+
+```python
+from statsmodels.tsa.arima_process import ArmaProcess
+
+plt.subplot(2,1,1)
+ar = np.array([1])
+# Unlike the autoregression model, the coefficient (theta) for a moving average model
+# is the actual value, not the negative of it
+ma = np.array([1, -0.9])
+ma_process = ArmaProcess(ar, ma)
+simulated_data = ma_process.generate_sample(nsample=1000)
+plt.plot(simulated_data)
+plt.show()
+```
+
+We can calculate the autocorrelation coefficient for a moving average model by taking `theta / (1 + theta²)`. So if theta is 0.9, the first-lag autocorrelation will be `0.9 / (1 + 0.9²) = 0.497`.
+
+### Estimating theta from a trend
+
+```python'
+from statsmodels.tsa.arima_model import ARMA
+
+# Note the order here is (0, 1), not (1, 0) like with the AR model
+mod = ARMA(simulated_data_1, order=(0, 1))
+res = mod.fit()
+
+print(res.summary())
+
+print("When the true theta=-0.9, the estimate of theta (and the constant) are:")
+print(res.params)
+```
+
+```
+                                  ARMA Model Results                              
+    ==============================================================================
+    Dep. Variable:                      y   No. Observations:                 1000
+    Model:                     ARMA(0, 1)   Log Likelihood               -1420.500
+    Method:                       css-mle   S.D. of innovations              1.001
+    Date:                Mon, 20 Jul 2020   AIC                           2846.999
+    Time:                        14:52:35   BIC                           2861.723
+    Sample:                             0   HQIC                          2852.595
+                                                                                  
+    ==============================================================================
+                     coef    std err          z      P>|z|      [0.025      0.975]
+    ------------------------------------------------------------------------------
+    const         -0.0038      0.003     -1.166      0.244      -0.010       0.003
+    ma.L1.y       -0.8967      0.015    -59.984      0.000      -0.926      -0.867
+                                        Roots                                    
+    =============================================================================
+                      Real          Imaginary           Modulus         Frequency
+    -----------------------------------------------------------------------------
+    MA.1            1.1152           +0.0000j            1.1152            0.0000
+    -----------------------------------------------------------------------------
+    When the true theta=-0.9, the estimate of theta (and the constant) are:
+    [-0.00384352 -0.8967135 ]
+```
+
+### Predicting future trend values
+
+```python
+from statsmodels.tsa.arima_model import ARMA
+
+mod = ARMA(simulated_data_1, order=(0, 1))
+res = mod.fit()
+res.plot_predict(start=990, end=1010)
+plt.show()
+```
+
 # Resources
 
 * https://campus.datacamp.com/courses/time-series-analysis-in-python
 * https://www.youtube.com/watch?v=DeORzP0go5I
+* [Time Series Talk : Moving Average Model](https://www.youtube.com/watch?v=voryLhxiPzE)
