@@ -101,7 +101,7 @@ df["pct_change"].autocorr()
 * When autocorrelation is negative, we say the series is _mean reverting_ (when it goes up, it later tends to go down)
 * When autocorrelation is positive, we say the series is _trend following_ or that it has _momentum_ (when it goes up, it later tends to keep going up)
 
-## Autocorrelation function
+## Autocorrelation function (ACF)
 
 This lets us look at the a bunch of correlations, not just the lag-one correlation.
 
@@ -295,7 +295,13 @@ plt.show()
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/autoregression-plot-predict.png?raw=true)
 
-#### Determining the order when it's unknown
+### Determining the order when it's unknown
+
+#### Method 1: Using the Partial Autocorrelation Function (PACF)
+
+Measures the incremental benefit of adding another lag. For an AR(1), the PACF should have a significant lag-1 value, and roughly zeros after that. For an AR(2), it should have significant lag-1 and lag-2 values, and zeros after that, and so on. ([#](https://campus.datacamp.com/courses/time-series-analysis-in-python/autoregressive-ar-models?ex=11))
+
+PACF measures the *direct* effect of a lag. It's direct because the effect of the prior lags has already been determined, so when we calculate the effect of an additional lag it's just that lag's effect we're calculating.
 
 ```python
 from statsmodels.tsa.arima_process import ArmaProcess
@@ -306,8 +312,47 @@ ar_object = ArmaProcess([1, -0.6, -0.3], [1])
 simulated_data = ar_object.generate_sample(nsample=5000)
 
 # Then use the plot_pacf function to figure out the order
+# Can also set `alpha` which sets the width of the confidence interval
 plot_pacf(simulated_data, lags=20)
 plt.show()
 ```
 
 ![](https://github.com/mattm/python-cheat-sheet/blob/master/images/pacf.png?raw=true)
+
+#### Method 2: Using the information criteria
+
+Adjusts goodness of fit for number of parameters by imposing a penalty based on number of parameters used.
+
+* Akaike Information Criterion (AIC)
+* Bayesian Information Criterion (BIC)
+
+```python
+...
+result = model.fit()
+
+result.aic
+result.bic
+```
+
+Fit several different models, then choose the one with the lowest information criterion ([#](https://campus.datacamp.com/courses/time-series-analysis-in-python/autoregressive-ar-models?ex=12)):
+
+```python
+from statsmodels.tsa.arima_model import ARMA
+
+bic = np.zeros(7)
+for p in range(len(bic)):
+    mod = ARMA(df, order=(p, 0))
+    res = mod.fit()
+    bic[p] = res.bic
+
+# Plot the BIC as a function of p
+plt.plot(range(1,7), BIC[1:7], marker='o')
+plt.xlabel('Order of AR Model')
+plt.ylabel('Bayesian Information Criterion')
+plt.show()
+```
+
+# Resources
+
+* https://campus.datacamp.com/courses/time-series-analysis-in-python
+* https://www.youtube.com/watch?v=DeORzP0go5I
