@@ -1028,3 +1028,19 @@ date
 2020-01-06      8.0
 2020-01-07     -6.0
 ```
+
+## Generating dates/times between two dates
+
+```python
+pd.date_range(start="2020-07-01", end="2020-07-15", freq="D")
+```
+
+```
+DatetimeIndex(['2020-07-01', '2020-07-02', '2020-07-03', '2020-07-04',
+               '2020-07-05', '2020-07-06', '2020-07-07', '2020-07-08',
+               '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12',
+               '2020-07-13', '2020-07-14', '2020-07-15'],
+              dtype='datetime64[ns]', freq='D')
+```
+
+Can also do like `freq="1min"` to generate the minutes between two date/times, etc.
