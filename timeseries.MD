@@ -97,7 +97,7 @@ df["pct_change"].autocorr()
 ```
 
 * Autocorrelation (aka serial correlation) is the correlation of a time series with a lagged copy of itself
-* It's lag-one autocorrelation. For example, with daily time series we'd be comparing one day's value to the value the previous day.
+* It's lag-one autocorrelation by default, but you can specify a `lags` argument for `autocorr`. For example, with daily time series we'd be comparing one day's value to the value the previous day.
 * When autocorrelation is negative, we say the series is _mean reverting_ (when it goes up, it later tends to go down)
 * When autocorrelation is positive, we say the series is _trend following_ or that it has _momentum_ (when it goes up, it later tends to keep going up)
 
