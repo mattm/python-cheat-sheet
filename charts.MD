@@ -281,3 +281,11 @@ cluster_labels = pd.DataFrame({
 })
 cluster_labels.sort_values('label', ascending=False)
 ```
+
+## Trend Line
+
+```python
+z = np.polyfit(x, y, 1)
+p = np.poly1d(z)
+plt.plot(x,p(x),"r--")
+```
