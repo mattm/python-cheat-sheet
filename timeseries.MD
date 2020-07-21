@@ -122,7 +122,6 @@ Lags: 3
 
 * PACF measures the incremental benefit of adding another lag. It measures the *direct* effect of a lag. It's direct because the effect of the prior lags has already been determined, so when we calculate the effect of an additional lag it's just that lag's effect we're calculating.
 * Put another way: "PACF is a partial auto-correlation function. Basically instead of finding correlations of present with lags like ACF, it finds correlation of the residuals (which remains after removing the effects which are already explained by the earlier lag(s)) with the next lag value hence ‘partial’ and not ‘complete’ as we remove already found variations before we find the next correlation. So if there is any hidden information in the residual which can be modeled by the next lag, we might get a good correlation and we will keep that next lag as a feature while modeling. Remember while modeling we don’t want to keep too many features which are correlated as that can create multicollinearity issues. Hence we need to retain only the relevant features." ([#](https://towardsdatascience.com/significance-of-acf-and-pacf-plots-in-time-series-analysis-2fa11a5d10a8))
-* 
 
 ## Random walks
 
