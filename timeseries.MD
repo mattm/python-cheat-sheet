@@ -64,42 +64,65 @@ stock_price
 
 ## Autocorrelation
 
-```python
-df["pct_change"] = df["col"].pct_change()
-df["pct_change"].autocorr()
-```
-
-```
--0.040576
-```
-
-* Autocorrelation (aka serial correlation) is the correlation of a time series with a lagged copy of itself
+* Autocorrelation (aka serial correlation) is the correlation of a series with its lagged values
 * It's lag-one autocorrelation by default, but you can specify a `lags` argument for `autocorr`. For example, with daily time series we'd be comparing one day's value to the value the previous day.
 * When autocorrelation is negative, we say the series is _mean reverting_ (when it goes up, it later tends to go down)
 * When autocorrelation is positive, we say the series is _trend following_ or that it has _momentum_ (when it goes up, it later tends to keep going up)
 
-## Autocorrelation function (ACF)
+We can calculate it in several ways:
 
-This lets us look at the a bunch of correlations, not just the lag-one correlation.
+* By using the `corr` method to measure the correlation between a series and column of lagged values of itself
+* By using `autocorr` which eliminates the need for the additional column
+* By using the `acf` function which returns an array of correlations
+* By using `plot_acf` to visualize the correlations at each lag
 
 ```python
-from statsmodels.graphics.tsaplots import plot_acf
-from statsmodels.tsa.stattools import acf
+MAX_LAGS = 3
+acf_values = acf(df['trials'], nlags=MAX_LAGS, fft=False)
 
-series = pd.Series([1, 2, 10, 1, 2, 10])
+for lags in range(MAX_LAGS + 1):
+    print("\nLags:", lags)
+    
+    df['lagged_trials'] = df.shift(lags)
+    print(" corr: {:.5f}".format(df.corr()['trials']['lagged_trials']))
+    
+    print(" autocorr: {:.5f}".format(df['trials'].autocorr(lags)))
+    
+    print( " acf: {:.5f}".format(acf_values[lags]))
 
-_ = plot_acf(series, lags=3, alpha=1)
-
-acf_values = acf(series, nlags=3, fft=False)
-print(acf_values)
+_ = plot_acf(df['trials'], lags=MAX_LAGS, alpha=0.05)
+plt.show()
 ```
 
 ```
-[ 1.         -0.30593607 -0.44406393  0.5       ]
+Lags: 0
+ corr: 1.00000
+ autocorr: 1.00000
+ acf: 1.00000
+
+Lags: 1
+ corr: 0.48822
+ autocorr: 0.48822
+ acf: 0.48733
+
+Lags: 2
+ corr: 0.02809
+ autocorr: 0.02809
+ acf: 0.02798
+
+Lags: 3
+ corr: -0.19118
+ autocorr: -0.19118
+ acf: -0.19027
 ```
 
-* At 0 lags, the autocorrelation is always 1 because a value is always perfectly correlated with itself
-* At 3 lags, the autocorrelation here is 0.5 (not 1) because the first 3 values out of the 6 don't have a lag-three.
+![](https://github.com/mattm/python-cheat-sheet/blob/master/images/acf.png?raw=true)
+
+## Partial Autocorrelation (PACF)
+
+* PACF measures the incremental benefit of adding another lag. It measures the *direct* effect of a lag. It's direct because the effect of the prior lags has already been determined, so when we calculate the effect of an additional lag it's just that lag's effect we're calculating.
+* Put another way: "PACF is a partial auto-correlation function. Basically instead of finding correlations of present with lags like ACF, it finds correlation of the residuals (which remains after removing the effects which are already explained by the earlier lag(s)) with the next lag value hence ‘partial’ and not ‘complete’ as we remove already found variations before we find the next correlation. So if there is any hidden information in the residual which can be modeled by the next lag, we might get a good correlation and we will keep that next lag as a feature while modeling. Remember while modeling we don’t want to keep too many features which are correlated as that can create multicollinearity issues. Hence we need to retain only the relevant features." ([#](https://towardsdatascience.com/significance-of-acf-and-pacf-plots-in-time-series-analysis-2fa11a5d10a8))
+* 
 
 ## Random walks
 
@@ -276,9 +299,7 @@ plt.show()
 
 #### Method 1: Using the Partial Autocorrelation Function (PACF)
 
-Measures the incremental benefit of adding another lag. For an AR(1), the PACF should have a significant lag-1 value, and roughly zeros after that. For an AR(2), it should have significant lag-1 and lag-2 values, and zeros after that, and so on. ([#](https://campus.datacamp.com/courses/time-series-analysis-in-python/autoregressive-ar-models?ex=11))
-
-PACF measures the *direct* effect of a lag. It's direct because the effect of the prior lags has already been determined, so when we calculate the effect of an additional lag it's just that lag's effect we're calculating.
+For an AR(1), the PACF should have a significant lag-1 value, and roughly zeros after that. For an AR(2), it should have significant lag-1 and lag-2 values, and zeros after that, and so on. ([#](https://campus.datacamp.com/courses/time-series-analysis-in-python/autoregressive-ar-models?ex=11))
 
 ```python
 from statsmodels.tsa.arima_process import ArmaProcess
@@ -409,3 +430,4 @@ plt.show()
 * https://campus.datacamp.com/courses/time-series-analysis-in-python
 * https://www.youtube.com/watch?v=DeORzP0go5I
 * [Time Series Talk : Moving Average Model](https://www.youtube.com/watch?v=voryLhxiPzE)
+* [Significance of ACF and PACF Plots In Time Series Analysis](https://towardsdatascience.com/significance-of-acf-and-pacf-plots-in-time-series-analysis-2fa11a5d10a8)
