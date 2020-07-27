@@ -289,3 +289,13 @@ z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
 plt.plot(x,p(x),"r--")
 ```
+
+## Bar Chart
+
+```python
+# Vertical
+df.plot(kind="bar")
+
+# Horizontal
+df.plot(kind="barh")
+```
