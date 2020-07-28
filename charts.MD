@@ -237,6 +237,18 @@ Placing the legend on the right of the chart itself:
 _.legend(loc='upper left', bbox_to_anchor=(1, 1), prop={'size': 15})
 ```
 
+## Hiding a legend
+
+```python
+plt.legend('', frameon=False)
+```
+
+or
+
+```python
+ax.get_legend().remove()
+```
+
 ## Setting the chart size
 
 Arguments are width and height:
