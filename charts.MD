@@ -237,6 +237,18 @@ Placing the legend on the right of the chart itself:
 _.legend(loc='upper left', bbox_to_anchor=(1, 1), prop={'size': 15})
 ```
 
+## Hiding a legend
+
+```python
+plt.legend('', frameon=False)
+```
+
+or
+
+```python
+ax.get_legend().remove()
+```
+
 ## Setting the chart size
 
 Arguments are width and height:
@@ -288,4 +300,14 @@ cluster_labels.sort_values('label', ascending=False)
 z = np.polyfit(x, y, 1)
 p = np.poly1d(z)
 plt.plot(x,p(x),"r--")
+```
+
+## Bar Chart
+
+```python
+# Vertical
+df.plot(kind="bar")
+
+# Horizontal
+df.plot(kind="barh")
 ```
