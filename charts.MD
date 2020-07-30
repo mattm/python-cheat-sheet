@@ -249,6 +249,12 @@ or
 ax.get_legend().remove()
 ```
 
+or
+
+```python
+df.plot(legend=False)
+```
+
 ## Setting the chart size
 
 Arguments are width and height:
