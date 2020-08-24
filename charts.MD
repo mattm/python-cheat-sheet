@@ -273,33 +273,6 @@ _.yaxis.set_major_formatter(mtick.PercentFormatter())
 
 This will not convert numbers like 0.20 to 20%, so you need to multiply by 100 before using this.
 
-## Dendogram
-
-```python
-scaler = StandardScaler()
-values = scaler.fit_transform(df[['billings', 'users', 'mailboxes', 'weekly_responses']].values)
-mergings = linkage(values, method='complete')
-plt.figure(figsize=(10, 6))
-dendrogram(mergings,
-    labels=list(df['company_name']),
-    leaf_rotation=90,
-    leaf_font_size=12
-)
-plt.show()
-```
-
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/dendrogram.png?raw=true)
-
-We can also get the labels at a certain height:
-
-```python
-cluster_labels = pd.DataFrame({
-    'company_name': df['company_name'],
-    'label': fcluster(mergings, 4, criterion='distance')
-})
-cluster_labels.sort_values('label', ascending=False)
-```
-
 ## Trend Line
 
 ```python
