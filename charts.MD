@@ -70,12 +70,6 @@ plt.show()
 plt.style.use('ggplot')
 ```
 
-## Correlation heatmap
-
-```python
-sns.heatmap(df.corr(), square=True, cmap='RdYlGn')
-```
-
 ## Seaborn histogram
 
 ```python
@@ -141,18 +135,6 @@ Can also segment the chart by other variables:
 ```python
 ax = sns.pointplot(x="time", y="total_bill", hue="smoker", data=tips)
 ```
-
-## Correlation Matrix
-
-```python
-import pandas as pd
-import seaborn as sns
-
-train = pd.read_csv("train.csv")
-_ = sns.heatmap(train.corr())
-```
-
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/correlation-matrix.png?raw=true)
 
 ## Correlations for a single feature
 
