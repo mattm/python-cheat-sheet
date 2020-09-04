@@ -70,12 +70,6 @@ plt.show()
 plt.style.use('ggplot')
 ```
 
-## Correlation heatmap
-
-```python
-sns.heatmap(df.corr(), square=True, cmap='RdYlGn')
-```
-
 ## Seaborn histogram
 
 ```python
@@ -141,51 +135,6 @@ Can also segment the chart by other variables:
 ```python
 ax = sns.pointplot(x="time", y="total_bill", hue="smoker", data=tips)
 ```
-
-## Correlation Matrix
-
-```python
-import pandas as pd
-import seaborn as sns
-
-train = pd.read_csv("train.csv")
-_ = sns.heatmap(train.corr())
-```
-
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/correlation-matrix.png?raw=true)
-
-## Correlations for a single feature
-
-```python
-import pandas as pd
-import matplotlib.pyplot as plt
-
-train = pd.read_csv("train.csv")
-corr = train.corr().abs().unstack().sort_values(ascending=False).reset_index()
-corr.rename(columns={"level_0": "Feature 1", "level_1": "Feature 2", 0: "Correlation"}, inplace=True)
-survival_correlations = corr[corr["Feature 1"] == "Survived"]
-print(survival_correlations)
-
-plt.bar(survival_correlations["Feature 2"], survival_correlations["Correlation"])
-plt.title("Survival Correlations")
-plt.ylabel("Correlation")
-plt.xlabel("Feature")
-plt.xticks(rotation=90)
-plt.show()
-```
-
-```
-   Feature 1    Feature 2  Correlation
-2   Survived     Survived     1.000000
-14  Survived       Pclass     0.338481
-17  Survived         Fare     0.257307
-30  Survived        Parch     0.081629
-32  Survived          Age     0.077221
-37  Survived        SibSp     0.035322
-45  Survived  PassengerId     0.005007
-```
-
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/correlation-bar-chart.png?raw=true)
 
 ## Stacked bar chart
 
@@ -272,33 +221,6 @@ _.yaxis.set_major_formatter(mtick.PercentFormatter())
 ```
 
 This will not convert numbers like 0.20 to 20%, so you need to multiply by 100 before using this.
-
-## Dendogram
-
-```python
-scaler = StandardScaler()
-values = scaler.fit_transform(df[['billings', 'users', 'mailboxes', 'weekly_responses']].values)
-mergings = linkage(values, method='complete')
-plt.figure(figsize=(10, 6))
-dendrogram(mergings,
-    labels=list(df['company_name']),
-    leaf_rotation=90,
-    leaf_font_size=12
-)
-plt.show()
-```
-
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/dendrogram.png?raw=true)
-
-We can also get the labels at a certain height:
-
-```python
-cluster_labels = pd.DataFrame({
-    'company_name': df['company_name'],
-    'label': fcluster(mergings, 4, criterion='distance')
-})
-cluster_labels.sort_values('label', ascending=False)
-```
 
 ## Trend Line
 
