@@ -295,45 +295,6 @@ plt.title('Logistic Regerssion ROC Curve')
 plt.show()
 ```
 
-
-## Preprocessing categorical variables using get_dummies
-
-```python
-import pandas as pd
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import GridSearchCV
-
-# Prepare the data
-df = pd.read_csv("data.csv")
-df = df.drop(['company_id', 'sign_up_email_domain', 'trial_score', 'trial_score_description'], axis=1)
-
-# `get_dummies` will take the categorical labels (sign_up_email_type here) and create additional columns
-# for each possible value: 
-# 1. 'sign_up_email_type_None' 
-# 2. 'sign_up_email_type_Personal Email' 
-# 3. 'sign_up_email_type_Work Email'
-# ... where the values are are a 0 or 1
-df = pd.get_dummies(df)
-print(df.columns)
-
-# However, we having all three columns is unnecessary, the model only needs two because
-# the third is implied by the values in the other two
-
-# We can either drop a column manually...
-df = df.drop('sign_up_email_type_None', axis=1)
-
-# Or we could have done this directly in get_dummies:
-# df = pd.get_dummies(df, drop_first=True)
-
-# And finally we'll clean up the column name that get_dummies created
-df = df.rename(columns={
-    'sign_up_email_type_Work Email': 'has_work_email',
-    'sign_up_email_type_Personal Email': 'has_personal_email'
-})
-
-df.head()
-```
-
 ## Imputing missing values and using a pipeline
 
 ```python
@@ -378,37 +339,6 @@ x_scaled = scale(x)
 
 # We can see that scaling manually has the same result
 standard_deviations = (x - np.mean(x)) / np.std(x)
-```
-
-## Pipeline with hyperparameter tuning
-
-```python
-# Setup the pipeline
-steps = [('scaler', StandardScaler()),
-         ('SVM', SVC())]
-
-pipeline = Pipeline(steps)
-
-# Specify the hyperparameter space
-parameters = {'SVM__C':[1, 10, 100],
-              'SVM__gamma':[0.1, 0.01]}
-
-# Create train and test sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=21)
-
-# Instantiate the GridSearchCV object: cv
-cv = GridSearchCV(pipeline, parameters)
-
-# Fit to the training set
-cv.fit(X_train, y_train)
-
-# Predict the labels of the test set: y_pred
-y_pred = cv.predict(X_test)
-
-# Compute and print metrics
-print("Accuracy: {}".format(cv.score(X_test, y_test)))
-print(classification_report(y_test, y_pred))
-print("Tuned Model Parameters: {}".format(cv.best_params_))
 ```
 
 ## Measuring accuracy of different models
@@ -502,28 +432,6 @@ Can then create a horizontal bar chart:
 importances_sorted.plot(kind='barh')
 plt.title('Features Importances')
 plt.show()
-```
-
-## Grid Search with a pipeline
-
-```python
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import GridSearchCV
-
-pipe = make_pipeline(MinMaxScaler(), XGBClassifier())
-param_grid = {
-    "xgbclassifier__max_depth": [1, 3, 5],
-    "xgbclassifier__n_estimators": [10, 100, 1000],
-    "xgbclassifier__learning_rate": [0.01, 0.05, 0.1]
-}
-grid = GridSearchCV(pipe, param_grid, cv=5)
-grid.fit(X_train, y_train)
-print(" Tuned Parameters: {}".format(grid.best_params_)) 
-print(" Best score is {:.2f}".format(grid.best_score_))
-
-...
-predictions = grid.predict(X_test)
 ```
 
 ## Voting classifier
