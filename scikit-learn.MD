@@ -167,63 +167,6 @@ plt.xticks(range(len(feature_names)), feature_names.values, rotation=60)
 plt.show()
 ```
 
-## Confuision Matrix
-
-```python
-import pandas as pd
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
-
-df = pd.read_csv("data.csv")
-df = df.drop(['company_id', 'sign_up_email_domain', 'trial_score', 'trial_score_description'], axis=1)
-df['sign_up_email_type'] = df['sign_up_email_type'].apply(lambda x: 1 if x == 'Work Email' else 0)
-
-X = df.drop(['has_closed'], axis=1)
-y = df['has_closed'].values
-X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=42, stratify=y)
-knn = KNeighborsClassifier(n_neighbors=7)
-knn.fit(X_train, y_train)
-y_pred = knn.predict(X_test)
-
-# +---------------+------------------+-----------------+
-# |               | Predicted: False | Predicted: True |
-# +---------------+------------------+-----------------+
-# | Actual: False | True Negative    | False Positive  |
-# | Actual: True  | False Negative   | True Positive   |
-# +---------------+------------------+-----------------+
-
-c_matrix = confusion_matrix(y_test, y_pred)
-c_report = classification_report(y_test, y_pred)
-
-true_negative = c_matrix[0, 0]     # Free customer, correctly predicted
-false_positive = c_matrix[0, 1]    # Free customer, but predicted to be paid
-false_negative = c_matrix[1, 0]    # Conversion, but predicted to be free
-true_positive = c_matrix[1, 1]     # Conversion, correctly predicted
-
-precision = true_positive / (true_positive + false_positive)
-recall = true_positive / (true_positive + false_negative)
-accuracy = (true_negative + true_positive) / (true_negative + false_positive + false_negative + true_positive)
-
-print("Confusion Matrix:\n", c_matrix, "\n")
-print("Classification Report:\n", c_report, "\n")
-print("Precision:", precision)     # The % of companies classified as a conversion that actually converted
-print("Recall:", recall)           # The % of conversions that were correctly identified
-print("Accuracy:", accuracy)       # The overall % correct. Same as knn.score(X_test, y_test)
-```
-
-## Plotting a confusion matrix
-
-```python
-from sklearn.metrics import plot_confusion_matrix
-
-plot_confusion_matrix(clf, X_train, y_train, display_labels=["Died", "Survived"], cmap="YlGn")
-plt.show()
-```
-
-![](https://github.com/mattm/python-cheat-sheet/blob/master/images/plot_confusion_matrix.png?raw=true)
-
 ## ROC Curves
 
 ```python
